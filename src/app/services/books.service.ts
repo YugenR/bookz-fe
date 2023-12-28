@@ -9,7 +9,7 @@ import {FetchParams, PageConverter} from "../interfaces/pagination";
 
 @Injectable({
   providedIn: 'root'
-}) 
+})
 export class BooksService {
 
   private readonly entities = Constants.entities;
