@@ -1,5 +1,5 @@
 <ng-template #loadingTemplate>
-  <div class="flex flex-col gap-4 w-52" *ngFor="let e of [].constructor(5)">
+  <div class="flex flex-wrap" *ngFor="let e of [].constructor(5)">
     <div class="skeleton h-32 w-full"></div>
     <div class="skeleton h-4 w-28"></div>
     <div class="skeleton h-4 w-full"></div>
@@ -7,26 +7,10 @@
   </div>
 </ng-template>
 
-<div class="drawer">
-  <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
-  <div class="drawer-content">
-    <!-- Page content here -->
-    <h1 class="title">Your wonderful books</h1>
-
-    <ng-container *ngIf="!loading else loadingTemplate">
-      <app-book-card [book]="book" *ngFor="let book of books"></app-book-card>
-    </ng-container>
-  </div>
-  <div class="drawer-side">
-    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-      <li><a>Books</a></li>
-      <li><a>My books</a></li>
-      <li><a>Logout</a></li>
-
-    </ul>
-  </div>
+<div class="flex flex-wrap gap-2" *ngIf="!loading else loadingTemplate">
+  <book-card [book]="book" *ngFor="let book of books"></book-card>
 </div>
+
 
 
 

@@ -22,16 +22,16 @@ export class BooksContainerComponent implements OnInit {
       createdAt: new Date(Date.now())
     },
     {
-      title: "Gone",
-      author: "Michael Grant",
-      plot: "Strani ragazzi con strani poteri",
+      title: "Harry Potter",
+      author: "J K Rowling",
+      plot: "Persone molto disadattate",
       isbn: "XXXXXXXX",
       createdAt: new Date(Date.now())
     },
     {
-      title: "Gone",
-      author: "Michael Grant",
-      plot: "Strani ragazzi con strani poteri",
+      title: "Lord of the Rings",
+      author: "Tolkien",
+      plot: "Strani elfi e nani con strani anelli",
       isbn: "XXXXXXXX",
       createdAt: new Date(Date.now())
     },
@@ -53,8 +53,9 @@ export class BooksContainerComponent implements OnInit {
           tap(() => this.loading = true),
           switchMap(() => this.booksService.getAllBooks(undefined)),
           map(books => {
-            this.books = books.list
-            return books.list
+            this.books = books
+            this.loading = false
+            return books
           }),
           catchError((err) => {
             this.loading = false
