@@ -1,0 +1,12 @@
+<div class="card card-compact w-96 bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">A book!</h2>
+    <p>Book plot is briefly explained here.</p>
+    <p>Read count: {{readCount}}</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary" (click)="readCount = readCount + 1">
+        {{readCount == 0 ? "Read" : "Read again"}}
+      </button>
+    </div>
+  </div>
+</div>
