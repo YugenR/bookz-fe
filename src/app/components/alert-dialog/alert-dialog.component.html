@@ -1,0 +1,14 @@
+<div class="text-center h-100" fxLayout="column" fxLayoutAlign="center center">
+
+
+  <h2>
+    {{data.title}}
+  </h2>
+
+  <p [ngClass]="{'pre-wrap': data.preWrapContent}">{{data.message}}</p>
+
+
+  <div fxLayout="row"  fxLayoutAlign="space-evenly" fxFlexAlign="stretch">
+    <button mat-flat-button matDialogClose>Chiudi</button>
+  </div>
+</div>

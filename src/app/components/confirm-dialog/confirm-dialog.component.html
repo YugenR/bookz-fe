@@ -1,0 +1,16 @@
+<div class="text-center h-100" fxLayout="column" fxLayoutAlign="center center">
+
+
+  <h2>
+    {{data.title}}
+  </h2>
+
+  <p [ngClass]="{'pre-wrap': data.preWrapMessage ?? false }">{{data.message}}</p>
+
+
+  <div fxFlexAlign="stretch" fxLayout="row wrap" fxLayoutAlign="space-evenly">
+    <button [matDialogClose]="false" class="mt-2_5" color="warn" mat-button>{{(data.cancelTextKey ? data.cancelTextKey : 'Annulla')}}</button>
+    <button [matDialogClose]="true" class="mt-2_5"
+            mat-button>{{(data.confirmTextKey ? data.confirmTextKey : 'Conferma')}}</button>
+  </div>
+</div>
