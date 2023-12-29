@@ -22,7 +22,6 @@ export class UsersContainerComponent implements OnInit {
   users: UserData[] = []
 
   users$ = new Observable<UserData[]>()
-  showModal = false;
 
   constructor(private usersService: UsersService,
               private dialogService: DialogsService) {

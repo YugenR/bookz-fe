@@ -21,11 +21,14 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BookFormComponent} from "./components/book-form/book-form.component";
+import { SearchBoxComponent } from './components/search-box/search-box.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BookCardComponent,
+    BookFormComponent,
     UserCardComponent,
     UserFormComponent,
     ConfirmDialogComponent,
@@ -34,7 +37,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BooksContainerComponent,
     UsersContainerComponent,
     PublicContainerComponent,
-    PrivateContainerComponent
+    PrivateContainerComponent,
+    SearchBoxComponent,
   ],
   imports: [
     BrowserModule,
