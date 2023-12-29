@@ -1,11 +1,11 @@
 <div class="card card-compact w-96 bg-base-100 shadow-xl">
   <div class="card-body">
-    <h2 class="card-title">{{book?.title}}</h2>
-    <h3 class="italic">Author: {{book?.author}}</h3>
+    <h2 class="card-title">{{book.title}}</h2>
+    <h3 class="italic">Author: {{book.author}}</h3>
     <p>Plot: {{book?.plot}}</p>
-    <p>Read count: {{readCount}}</p>
+    <p *ngIf="showReadCount">Read count: {{readCount}}</p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary" (click)="readCount = readCount + 1">
+      <button class="btn btn-primary" (click)="readThisBook()">
         {{readCount == 0 ? "Read" : "Read again"}}
       </button>
     </div>

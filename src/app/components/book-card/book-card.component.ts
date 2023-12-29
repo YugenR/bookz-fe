@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BookData} from "../../interfaces/book";
 
 @Component({
@@ -8,13 +8,20 @@ import {BookData} from "../../interfaces/book";
 })
 export class BookCardComponent implements OnInit {
 
-  @Input() book: BookData | null = null
+  @Input() readCount = 0
+  @Input() book: BookData = {} as BookData
+  @Input() showReadCount = true
+  @Output() read = new EventEmitter<void>()
 
-  readCount = 0
-
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
   }
 
+  ngOnInit(): void {
+    if (!this.readCount)
+      this.readCount = 0
+  }
+
+  readThisBook() {
+    this.read.emit()
+  }
 }

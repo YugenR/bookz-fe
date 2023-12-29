@@ -19,7 +19,7 @@ export class BooksService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllBooks(paginationParams : FetchParams | undefined): Observable<PageConverter<BookData>> {
+  public getAllBooks(paginationParams: FetchParams | undefined): Observable<PageConverter<BookData>> {
     let sortFilterParams = new HttpParams({fromObject: {...paginationParams}})
     return this.http
       .get(`${this.crtlFullPath}`, {params: sortFilterParams})
@@ -50,6 +50,14 @@ export class BooksService {
   public deleteBook(isbn: string): Observable<void> {
     return this.http
       .delete(`${this.crtlFullPath}/${isbn}`)
+      .pipe(map(() => {
+      }))
+  }
+
+  public readThisBook(userId: number, isbn: string): Observable<void> {
+    return this.http
+      .put(
+        `${environment.apiUrl}/${Constants.entities.users}/${userId}/${Constants.entities.books}/${isbn}`, {})
       .pipe(map(() => {
       }))
   }
