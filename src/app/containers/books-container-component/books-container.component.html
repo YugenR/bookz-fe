@@ -1,17 +1,54 @@
 <ng-template #loadingTemplate>
-  <div class="flex flex-wrap" *ngFor="let e of [].constructor(5)">
-    <div class="skeleton h-32 w-full"></div>
-    <div class="skeleton h-4 w-28"></div>
-    <div class="skeleton h-4 w-full"></div>
-    <div class="skeleton h-4 w-full"></div>
+  <div class="flex flex-wrap justify-center gap-2">
+    <div class="skeleton h-80 w-96" *ngFor="let e of [].constructor(3)"></div>
   </div>
 </ng-template>
 
-<div class="flex flex-wrap gap-2" *ngIf="!loading else loadingTemplate">
-  <book-card [isInLibrary]="isInLibrary(book.isbn)" [readCount]="user.books[book.isbn]" [book]="book"
-             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"></book-card>
+<div class="mb-3 flex justify-center flex-row gap-3">
+  <search-box (load)="loadKeyword($event)"></search-box>
+  <div class="join" id="by">
+    <input (click)="sortField('title')" class="join-item btn btn-square" type="radio" name="by" value="title" aria-label="Title" checked />
+    <input (click)="sortField('author')" class="join-item btn btn-square" type="radio" name="by" value="author" aria-label="Author" />
+    <input (click)="sortField('isbn')" class="join-item btn btn-square" type="radio" name="by" value="isbn" aria-label="ISBN" />
+  </div>
+  <div class="join" id="sort">
+    <input (click)="sortDir('ASC')" class="join-item btn btn-square" type="radio" name="sort" value="ASC" aria-label="ASC" checked />
+    <input (click)="sortDir('DESC')" class="join-item btn btn-square" type="radio" name="sort" value="DESC" aria-label="DESC" />
+  </div>
 </div>
 
+<div class="flex flex-wrap justify-center gap-2" *ngIf="!loading else loadingTemplate">
+  <book-card (edit)="editBook(book.isbn)" (delete)="deleteBook(book.isbn)" [isInLibrary]="isInLibrary(book.isbn)" [readCount]="user.books[book.isbn]" [book]="book"
+             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"></book-card>
+
+  <div class="card card-compact w-96 bg-purple-900 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">A new wonderful journey</h2>
+      <h3 class="italic">Author: An unpredictable mind</h3>
+      <p>Plot: Something you're about to unfold</p>
+      <div class="card-actions justify-end">
+
+        <button class="btn btn-primary" (click)="createBook()">
+          Add new book
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3 items-center justify-center w-2/4">
+
+    <div *ngIf="success" class="toast-center toast-middle fading-element">
+      <div class="alert alert-success">
+        <span>Operation successful.</span>
+      </div>
+    </div>
+
+    <div *ngIf="failure" class="toast-center toast-middle fading-element">
+      <div class="alert alert-error">
+        <span>Something went wrong.</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

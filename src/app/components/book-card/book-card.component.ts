@@ -14,6 +14,9 @@ export class BookCardComponent implements OnInit {
   @Input() isInLibrary = true
   @Output() read = new EventEmitter<void>()
   @Output() add = new EventEmitter<void>()
+  @Output() edit = new EventEmitter<void>()
+  @Output() delete = new EventEmitter<void>()
+
 
   constructor() {
   }
@@ -21,6 +24,8 @@ export class BookCardComponent implements OnInit {
   ngOnInit(): void {
     if (!this.readCount)
       this.readCount = 0
+    console.log(this.book)
+
   }
 
   readThisBook() {
@@ -29,5 +34,12 @@ export class BookCardComponent implements OnInit {
 
   addToLibrary() {
     this.add.emit()
+  }
+
+  editBook() {
+    this.edit.emit()
+  }
+  deleteBook() {
+    this.delete.emit()
   }
 }

@@ -6,6 +6,11 @@ import {map} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {UserDetail} from "../../interfaces/user";
 import {UsersService} from "../../services/users.service";
+import {GeneralDialogComponent} from "../../components/general-dialog/general-dialog.component";
+import {DialogsService} from "../../services/dialogs.service";
+import {BookFormComponent} from "../../components/book-form/book-form.component";
+import {FetchParams} from "../../interfaces/pagination";
+import {Constants} from "../../utils/constants";
 
 @Component({
   selector: 'books-container-component',
@@ -13,6 +18,14 @@ import {UsersService} from "../../services/users.service";
   styleUrls: ['./books-container.component.css']
 })
 export class BooksContainerComponent implements OnInit {
+
+  // User for HTTP Params
+  fetchParams: FetchParams = {} as FetchParams
+  defaultSortColumn = "title"
+  direction = "ASC"
+
+  success = false
+  failure = false
 
   loading = false
   user = {} as UserDetail
@@ -27,7 +40,15 @@ export class BooksContainerComponent implements OnInit {
   constructor(
     private booksService: BooksService,
     private usersService: UsersService,
+    private dialogService: DialogsService,
     private activatedRoute: ActivatedRoute) {
+
+    this.fetchParams = {
+      page: Constants.pagination.defaultPage,
+      num: Constants.pagination.defaultPageSize,
+      sort: `${this.defaultSortColumn} ${this.direction}`,
+      keyword: ""
+    }
 
     let userId: number | null = null;
 
@@ -55,7 +76,7 @@ export class BooksContainerComponent implements OnInit {
     this.books$ =
       of(true)
         .pipe(
-          switchMap(() => this.booksService.getAllBooks(undefined)),
+          switchMap(() => this.booksService.getAllBooks(this.fetchParams)),
           map(books => {
             this.books = books.list
             return books.list
@@ -92,10 +113,11 @@ export class BooksContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.observable$.subscribe(() => {})
+  }
 
-    this.observable$.subscribe(() => {
-    })
-
+  logMe(x: any) {
+    console.log(x)
   }
 
   readThisBook(isbn: string) {
@@ -124,4 +146,85 @@ export class BooksContainerComponent implements OnInit {
     return this.user.books[isbn] !== undefined
   }
 
+  createBook() {
+
+    this.dialogService.open(GeneralDialogComponent, {
+      data: {
+        dialogTitle: 'Create book',
+        componentData: {},
+        component: BookFormComponent
+      },
+    })
+      .afterClosed()
+      .pipe(switchMap(value => value ? this.books$ : EMPTY))
+      .subscribe({
+        next: () => this.popToast(),
+        error: () => this.popToast(true),        }
+      )
+
+  }
+
+  editBook(isbn: string) {
+
+    this.booksService.getBook(isbn)
+      .subscribe(book => {
+
+        this.dialogService.open(GeneralDialogComponent, {
+          data: {
+            dialogTitle: 'Edit book',
+            componentData: {book: book},
+            component: BookFormComponent
+          }
+        })
+          .afterClosed()
+          .pipe(switchMap(value => value ? this.books$ : EMPTY))
+          .subscribe({
+            next: () => this.popToast(),
+            error: () => this.popToast(true),            }
+          )
+      })
+  }
+
+  deleteBook(isbn: string) {
+    this.dialogService.confirm("Are you sure you want to delete this book?", "That's sad.")
+      .pipe(
+        switchMap((value) => value ?
+          this.booksService.deleteBook(isbn) : EMPTY),
+        switchMap(() => this.books$)
+      )
+      .subscribe({
+        next: () => this.popToast(),
+        error: () => this.popToast(true),        }
+      )
+  }
+
+
+
+  emitValue(value: string, $event: KeyboardEvent) {
+    console.log(value)
+  }
+
+  loadKeyword($event: any) {
+    this.fetchParams.keyword = $event.keyword
+    this.reload$.subscribe()
+
+  }
+  sortField(sortField: string) {
+    this.fetchParams.sort = `${sortField} ${this.fetchParams.sort.split(" ")[1]}`
+    this.reload$.subscribe()
+  }
+
+  sortDir(sortDir: string) {
+    this.fetchParams.sort = `${this.fetchParams.sort.split(" ")[0]} ${sortDir}`
+    this.reload$.subscribe()
+  }
+  private popToast(isError = false) {
+    if (isError) {
+      this.failure = true
+      setTimeout(() => this.failure = false, 3000)
+    } else {
+      this.success = true
+      setTimeout(() => this.success = false, 3000)
+    }
+  }
 }
