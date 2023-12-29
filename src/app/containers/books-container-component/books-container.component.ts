@@ -5,7 +5,7 @@ import {BooksService} from "../../services/books.service";
 import {map} from "rxjs/operators";
 
 @Component({
-  selector: 'app-books-container-component',
+  selector: 'books-container-component',
   templateUrl: './books-container.component.html',
   styleUrls: ['./books-container.component.css']
 })
@@ -43,6 +43,4 @@ export class BooksContainerComponent implements OnInit {
     this.books$.subscribe()
 
   }
-
-  protected readonly Array = Array;
 }

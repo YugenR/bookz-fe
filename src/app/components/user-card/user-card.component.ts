@@ -10,7 +10,9 @@ export class UserCardComponent implements OnInit {
 
   @Input() user: UserData = {} as UserData
 
-  constructor() { }
+  constructor() {
+    console.log("user card")
+  }
 
   ngOnInit(): void {
   }

@@ -6,12 +6,16 @@ import { AppComponent } from './app.component';
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { BooksContainerComponent } from './containers/books-container-component/books-container.component';
 import {HttpClientModule} from "@angular/common/http";
+import {UsersContainerComponent} from "./containers/users-container-component/users-container.component";
+import {UserCardComponent} from "./components/user-card/user-card.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     BookCardComponent,
-    BooksContainerComponent
+    UserCardComponent,
+    BooksContainerComponent,
+    UsersContainerComponent
   ],
   imports: [
     BrowserModule,
