@@ -74,8 +74,8 @@ export class UsersContainerComponent implements OnInit {
 
         this.dialogService.open(GeneralDialogComponent, {
           data: {
-            dialogTitle: 'Create user',
-            componentData: {entity: user},
+            dialogTitle: 'Edit user',
+            componentData: {user: user},
             component: UserFormComponent
           }
         })
@@ -86,7 +86,25 @@ export class UsersContainerComponent implements OnInit {
             error: (error) => console.log(error)/*this.snackService.error(error.message)*/,
           })
       })
+  }
 
+  deleteUser(userId: number) {
+    this.dialogService.confirm("Are you sure you want to delete this user?", "Be careful!")
+      .pipe(
+        switchMap((value) => value ?
+          this.usersService.deleteUser(userId) : EMPTY),
+        switchMap(() => this.users$)
+      )
 
+      .subscribe({
+          next: () => {
+            // todo
+            console.log("success")
+            // this.snackService.success("Risorse selezionate eliminate con successo")
+          },
+            // todo
+          error: () => console.log("error")/*this.snackService.error("Impossibile eliminare le risorse selezionate")*/
+        }
+      )
   }
 }

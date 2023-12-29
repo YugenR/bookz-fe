@@ -7,6 +7,12 @@
       <button class="btn btn-primary" [routerLink]="generatePath(user.id)">
         It's me
       </button>
+      <button class="btn btn-accent" (click)="editUser()">
+        Edit
+      </button>
+      <button class="btn bg-red-500" (click)="deleteUser()">
+        Delete
+      </button>
     </div>
   </div>
 </div>

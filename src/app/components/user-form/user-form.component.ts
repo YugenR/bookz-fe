@@ -18,7 +18,6 @@ export class UserFormComponent {
   userForm: FormGroup;
   formEntity: UserCreate = {} as UserCreate
   saving = false
-  loading = false
 
   constructor(
     private userService: UsersService,
@@ -37,11 +36,10 @@ export class UserFormComponent {
   _user: UserDetail = {} as UserDetail
 
   @Input() set user(value: UserDetail) {
+    console.log("Input user", value)
     this._user = value
+    this.userForm.controls["email"].clearValidators()
     this.userForm.patchValue(this._user)
-  }
-
-  ngOnInit(): void {
   }
 
   createUser() {
@@ -73,6 +71,7 @@ export class UserFormComponent {
     let formValue = this.userForm.value
 
     delete formValue.id;
+    delete formValue.email;
 
     this.formEntity = {...this.formEntity, ...formValue}
 
