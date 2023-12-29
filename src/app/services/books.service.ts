@@ -26,10 +26,10 @@ export class BooksService {
       .pipe(map(value => value as PageConverter<BookData>))
   }
 
-  public getBook(bookId: number): Observable<BookDetail> {
+  public getBook(isbn: string): Observable<BookDetail> {
 
     return this.http
-      .get(`${this.crtlFullPath}/${bookId}`)
+      .get(`${this.crtlFullPath}/${isbn}`)
       .pipe(map(value => value as BookData))
   }
 
@@ -41,15 +41,15 @@ export class BooksService {
       )
   }
 
-  public updateBook(bookId: number, book: BookUpdate): Observable<BookDetail> {
+  public updateBook(isbn: string, book: BookUpdate): Observable<BookDetail> {
     return this.http
-      .patch(`${this.crtlFullPath}/${bookId}`, book)
+      .patch(`${this.crtlFullPath}/${isbn}`, book)
       .pipe(map(value => value as BookDetail))
   }
 
-  public deleteBook(bookId: number): Observable<void> {
+  public deleteBook(isbn: string): Observable<void> {
     return this.http
-      .delete(`${this.crtlFullPath}/${bookId}`)
+      .delete(`${this.crtlFullPath}/${isbn}`)
       .pipe(map(() => {
       }))
   }
