@@ -1,0 +1,12 @@
+<ng-template #loadingTemplate>
+  <div class="flex flex-wrap" *ngFor="let e of [].constructor(5)">
+    <div class="skeleton h-32 w-full"></div>
+    <div class="skeleton h-4 w-28"></div>
+    <div class="skeleton h-4 w-full"></div>
+    <div class="skeleton h-4 w-full"></div>
+  </div>
+</ng-template>
+
+<div class="flex flex-wrap gap-2" *ngIf="!loading else loadingTemplate">
+  <user-card [user]="user" *ngFor="let user of users"></user-card>
+</div>

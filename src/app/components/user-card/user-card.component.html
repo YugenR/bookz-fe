@@ -1,0 +1,12 @@
+<div class="card card-compact w-96 bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">{{user.name}} {{user.surname}}</h2>
+    <p>Total books: {{user.bookCount}}</p>
+    <p>Total read: {{user.totalReadCount}}</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary" (click)="chooseUser(user.id)">
+        It's me
+      </button>
+    </div>
+  </div>
+</div>
