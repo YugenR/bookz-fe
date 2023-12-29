@@ -2,6 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">{{book.title}}</h2>
     <h3>Author: {{book.author}}</h3>
+    <h3>ISBN: {{book.isbn}}</h3>
     <p class="italic">Plot: {{book?.plot}}</p>
     <p *ngIf="showReadCount">Read count: {{readCount}}</p>
     <div class="card-actions justify-end">
