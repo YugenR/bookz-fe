@@ -19,6 +19,6 @@ export class UserCardComponent implements OnInit {
 
 
   generatePath(userId: number) {
-    return `reserved/${userId}`;
+    return `/reserved/${userId}`;
   }
 }
