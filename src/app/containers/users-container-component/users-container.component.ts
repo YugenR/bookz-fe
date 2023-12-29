@@ -56,7 +56,7 @@ export class UsersContainerComponent implements OnInit {
         dialogTitle: 'Create user',
         componentData: {},
         component: UserFormComponent
-      }
+      },
     })
       .afterClosed()
       .pipe(switchMap(value => value ? this.users$ : EMPTY))

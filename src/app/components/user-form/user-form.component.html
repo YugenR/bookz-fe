@@ -1,4 +1,4 @@
-<div [formGroup]="userForm" class="flex flex-col space-y-4">
+<div [formGroup]="userForm" class="flex flex-col space-y-8">
 
   <mat-form-field class="">
 
@@ -45,7 +45,7 @@
 
 
   <button
-    (click)="_user?.id ? updateUser(_user.id) : createUser()"
+    (click)="_user.id ? updateUser(_user.id) : createUser()"
     [disabled]="userForm.invalid || saving || !userForm.dirty"
     color="primary"
     class="bg-blue-500 text-white px-4 py-2 rounded"

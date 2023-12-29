@@ -22,9 +22,6 @@ export class GeneralDialogComponent implements AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<GeneralDialogComponent>,
   ) {
-    this.dialogRef.disableClose = true
-
-
   }
 
   ngAfterViewInit(): void {
