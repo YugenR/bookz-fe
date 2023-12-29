@@ -14,6 +14,9 @@ import {UserFormComponent} from "../../components/user-form/user-form.component"
 })
 export class UsersContainerComponent implements OnInit {
 
+  success = false
+  failure = false
+
   loading = false
 
   users: UserData[] = []
@@ -61,9 +64,10 @@ export class UsersContainerComponent implements OnInit {
       .afterClosed()
       .pipe(switchMap(value => value ? this.users$ : EMPTY))
       .subscribe({
-        next: () => console.log()/*this.snackService.success('User created')*/,
-        error: (error) => console.log(error)/*this.snackService.error(error.message)*/,
-      })
+          next: () => this.popToast(),
+          error: () => this.popToast(true),
+        }
+      )
 
   }
 
@@ -82,9 +86,10 @@ export class UsersContainerComponent implements OnInit {
           .afterClosed()
           .pipe(switchMap(value => value ? this.users$ : EMPTY))
           .subscribe({
-            next: () => console.log()/*this.snackService.success('User created')*/,
-            error: (error) => console.log(error)/*this.snackService.error(error.message)*/,
-          })
+              next: () => this.popToast(),
+              error: () => this.popToast(true),
+            }
+          )
       })
   }
 
@@ -95,16 +100,20 @@ export class UsersContainerComponent implements OnInit {
           this.usersService.deleteUser(userId) : EMPTY),
         switchMap(() => this.users$)
       )
-
       .subscribe({
-          next: () => {
-            // todo
-            console.log("success")
-            // this.snackService.success("Risorse selezionate eliminate con successo")
-          },
-            // todo
-          error: () => console.log("error")/*this.snackService.error("Impossibile eliminare le risorse selezionate")*/
+          next: () => this.popToast(),
+          error: () => this.popToast(true),
         }
       )
+  }
+
+  private popToast(isError = false) {
+    if (isError) {
+      this.failure = true
+      setTimeout(() => this.failure = false, 3000)
+    } else {
+      this.success = true
+      setTimeout(() => this.success = false, 3000)
+    }
   }
 }
