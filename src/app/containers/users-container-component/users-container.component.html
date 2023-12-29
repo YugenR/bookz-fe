@@ -19,25 +19,12 @@
         <p>Total books: ??</p>
         <p>Total read: ??</p>
         <div class="card-actions justify-end">
-          <button class="btn btn-primary" (click)="modal.showModal()">
+          <button class="btn btn-primary" (click)="createUser()">
             Add new
           </button>
         </div>
       </div>
     </div>
   </div>
-
-  <dialog #modal id="create_dialog" class="modal">
-    <div class="modal-box">
-      <h3 class="font-bold text-lg">Create user</h3>
-      <div class="modal-action">
-        <form method="dialog">
-          <!-- if there is a button in form, it will close the modal -->
-          <button class="btn-primary" (click)="modal.close()">Save</button>
-          <button class="btn" (click)="modal.close()">Close</button>
-        </form>
-      </div>
-    </div>
-  </dialog>
 
 </div>
