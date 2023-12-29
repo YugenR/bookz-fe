@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
-import {AlertDialogComponent} from "../utils/shared-components/alert-dialog/alert-dialog.component";
-import {ConfirmDialogComponent} from "../utils/shared-components/confirm-dialog/confirm-dialog.component";
+import {AlertDialogComponent} from "../components/alert-dialog/alert-dialog.component";
+import {ConfirmDialogComponent} from "../components/confirm-dialog/confirm-dialog.component";
 
 @Injectable({
   providedIn: 'root'

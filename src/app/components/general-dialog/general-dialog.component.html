@@ -1,19 +1,10 @@
-<div fxLayout="row">
-  <div fxLayout="column" fxFlex>
-    <h1 matDialogTitle>
-      <ng-container>{{data.dialogTitle}}</ng-container>
+<div class="flex">
+    <h1 matDialogTitle class="text-2xl">
+      {{ data.dialogTitle }}
     </h1>
-  </div>
-  <div fxLayout="column" fxFlexAlign="start" fxFlex="10" fxLayoutAlign="end start">
-    <button mat-button class="close-icon" [mat-dialog-close]="false">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
 </div>
 
-<mat-dialog-content
-  [class]="responsiveService.isMobile ? dialogSizes.mobile : dialogSizes.desktop"
->
+<mat-dialog-content>
 
   <div #childContainer></div>
 

@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, Inject, ViewChild, ViewContainerRef} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DialogData} from "../../global-functions-and-types";
-import {ResponsiveService} from "../../../services/responsive.service";
-import {Constants} from "../../constants";
+import {DialogData} from "../../interfaces/dialog";
 
 
 /**
@@ -10,13 +8,12 @@ import {Constants} from "../../constants";
  * Constructor needs a "data" object of type DialogData
  */
 @Component({
-  selector: 'aw-general-dialog',
+  selector: 'general-dialog',
   templateUrl: './general-dialog.component.html',
   styleUrls: ['./general-dialog.component.scss']
 })
 export class GeneralDialogComponent implements AfterViewInit {
 
-  dialogSizes = Constants.dialogSizes
 
   @ViewChild('childContainer', { read: ViewContainerRef }) childContainer!: ViewContainerRef;
 
@@ -24,7 +21,6 @@ export class GeneralDialogComponent implements AfterViewInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<GeneralDialogComponent>,
-    public responsiveService: ResponsiveService
   ) {
     this.dialogRef.disableClose = true
 

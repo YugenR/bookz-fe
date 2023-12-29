@@ -1,14 +1,17 @@
-<div class="text-center h-100" fxLayout="column" fxLayoutAlign="center center">
+<div class="text-center h-screen flex flex-col items-center justify-center">
 
-
-  <h2>
-    {{data.title}}
+  <h2 class="text-4xl">
+    {{ data.title }}
   </h2>
 
-  <p [ngClass]="{'pre-wrap': data.preWrapContent}">{{data.message}}</p>
+  <p class="{{ data.preWrapContent ? 'whitespace-pre-wrap' : '' }}">
+    {{ data.message }}
+  </p>
 
-
-  <div fxLayout="row"  fxLayoutAlign="space-evenly" fxFlexAlign="stretch">
-    <button mat-flat-button matDialogClose>Chiudi</button>
+  <div class="flex justify-around items-stretch">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded" mat-flat-button matDialogClose>
+      Chiudi
+    </button>
   </div>
+
 </div>
