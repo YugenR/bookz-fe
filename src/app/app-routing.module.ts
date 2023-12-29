@@ -24,20 +24,12 @@ const routes: Routes = [
         component: PrivateContainerComponent,
         children: [
           {
+            path: "books",
+            component: BooksContainerComponent,
+          },
+          {
             path: ":userId",
             component: BooksContainerComponent,
-            // children: [
-            //   {
-            //     path: 'books',
-            //     children: [
-            //       {
-            //         path: ':bookId',
-            //         // component: BookDetailComponent,
-            //       },
-            //     ]
-            //   },
-            // ]
-
           }
         ]
       },

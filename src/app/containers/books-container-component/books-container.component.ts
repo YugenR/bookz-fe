@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BookData} from "../../interfaces/book";
 import {catchError, EMPTY, Observable, of, switchMap, tap} from "rxjs";
 import {BooksService} from "../../services/books.service";
@@ -21,8 +21,8 @@ export class BooksContainerComponent implements OnInit {
 
   books$ = new Observable<BookData[]>()
   user$ = new Observable<UserDetail>()
-  observable$= new Observable<BookData[]>;
-  reload$= new Observable<BookData[]>;
+  observable$ = new Observable<BookData[]>;
+  reload$ = new Observable<BookData[]>;
 
   constructor(
     private booksService: BooksService,
@@ -50,7 +50,6 @@ export class BooksContainerComponent implements OnInit {
             console.log(err)
             return EMPTY;
           })
-
         )
 
     this.books$ =
@@ -94,7 +93,8 @@ export class BooksContainerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.observable$.subscribe(() => {})
+    this.observable$.subscribe(() => {
+    })
 
   }
 
@@ -104,7 +104,24 @@ export class BooksContainerComponent implements OnInit {
         switchMap(() => this.booksService.readThisBook(this.user.id, isbn)),
         switchMap(() => this.reload$),
       )
-      .subscribe(value => {})
+      .subscribe(value => {
+      })
 
   }
+
+  addToLibrary(isbn: string) {
+    of(true)
+      .pipe(
+        switchMap(() => this.booksService.addToLibrary(this.user.id, isbn)),
+        switchMap(() => this.reload$),
+      )
+      .subscribe(value => {
+      })
+
+  }
+
+  isInLibrary(isbn: string) {
+    return this.user.books[isbn] !== undefined
+  }
+
 }

@@ -8,7 +8,8 @@
 </ng-template>
 
 <div class="flex flex-wrap gap-2" *ngIf="!loading else loadingTemplate">
-  <book-card [readCount]="user.books[book.isbn]" [book]="book" *ngFor="let book of books" (read)="readThisBook(book.isbn)"></book-card>
+  <book-card [isInLibrary]="isInLibrary(book.isbn)" [readCount]="user.books[book.isbn]" [book]="book"
+             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"></book-card>
 </div>
 
 

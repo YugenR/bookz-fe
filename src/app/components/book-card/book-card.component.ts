@@ -11,7 +11,9 @@ export class BookCardComponent implements OnInit {
   @Input() readCount = 0
   @Input() book: BookData = {} as BookData
   @Input() showReadCount = true
+  @Input() isInLibrary = true
   @Output() read = new EventEmitter<void>()
+  @Output() add = new EventEmitter<void>()
 
   constructor() {
   }
@@ -23,5 +25,9 @@ export class BookCardComponent implements OnInit {
 
   readThisBook() {
     this.read.emit()
+  }
+
+  addToLibrary() {
+    this.add.emit()
   }
 }

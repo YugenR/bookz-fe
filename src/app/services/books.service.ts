@@ -61,5 +61,11 @@ export class BooksService {
       .pipe(map(() => {
       }))
   }
-
+  public addToLibrary(userId: number, isbn: string): Observable<void> {
+    return this.http
+      .put(
+        `${environment.apiUrl}/${Constants.entities.users}/${userId}/${Constants.entities.books}/${isbn}/add`, {})
+      .pipe(map(() => {
+      }))
+  }
 }
