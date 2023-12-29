@@ -17,7 +17,8 @@ export class UserCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  chooseUser(id: number) {
-    console.log(id)
+
+  generatePath(userId: number) {
+    return `reserved/${userId}`;
   }
 }

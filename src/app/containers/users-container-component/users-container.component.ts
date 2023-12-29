@@ -16,6 +16,7 @@ export class UsersContainerComponent implements OnInit {
   users: UserData[] = []
 
   users$ = new Observable<UserData[]>()
+  showModal = false;
 
   constructor(private usersService: UsersService) {
     this.users$ =
@@ -45,4 +46,7 @@ export class UsersContainerComponent implements OnInit {
 
   }
 
+  createUser() {
+
+  }
 }

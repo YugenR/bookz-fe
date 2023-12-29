@@ -4,7 +4,7 @@
     <p>Total books: {{user.bookCount}}</p>
     <p>Total read: {{user.totalReadCount}}</p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary" (click)="chooseUser(user.id)">
+      <button class="btn btn-primary" [routerLink]="generatePath(user.id)">
         It's me
       </button>
     </div>

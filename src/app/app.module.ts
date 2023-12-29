@@ -8,6 +8,8 @@ import { BooksContainerComponent } from './containers/books-container-component/
 import {HttpClientModule} from "@angular/common/http";
 import {UsersContainerComponent} from "./containers/users-container-component/users-container.component";
 import {UserCardComponent} from "./components/user-card/user-card.component";
+import {PublicContainerComponent} from "./containers/public-container/public-container.component";
+import {PrivateContainerComponent} from "./containers/private-container/private-container.component";
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import {UserCardComponent} from "./components/user-card/user-card.component";
     BookCardComponent,
     UserCardComponent,
     BooksContainerComponent,
-    UsersContainerComponent
+    UsersContainerComponent,
+    PublicContainerComponent,
+    PrivateContainerComponent
   ],
   imports: [
     BrowserModule,

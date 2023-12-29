@@ -2,18 +2,49 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
 import {UsersContainerComponent} from "./containers/users-container-component/users-container.component";
+import {PublicContainerComponent} from "./containers/public-container/public-container.component";
+import {PrivateContainerComponent} from "./containers/private-container/private-container.component";
 
 const routes: Routes = [
   {
-    path: 'login',
-    component: UsersContainerComponent,
+    path: '',
+    component: PublicContainerComponent,
     children: [
       {
-        path: 'books',
-        component: BooksContainerComponent
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+      },
+      {
+        path: 'login',
+        component: UsersContainerComponent
+      },
+      {
+        path: 'reserved',
+        component: PrivateContainerComponent,
+        children: [
+          {
+            path: ":userId",
+            component: BooksContainerComponent,
+            // children: [
+            //   {
+            //     path: 'books',
+            //     children: [
+            //       {
+            //         path: ':bookId',
+            //         // component: BookDetailComponent,
+            //       },
+            //     ]
+            //   },
+            // ]
+
+          }
+        ]
       },
     ]
   },
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({
