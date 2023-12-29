@@ -13,36 +13,7 @@ export class BooksContainerComponent implements OnInit {
 
   loading = false
 
-  books: BookData[] = [
-    {
-      title: "Gone",
-      author: "Michael Grant",
-      plot: "Strani ragazzi con strani poteri",
-      isbn: "XXXXXXXX",
-      createdAt: new Date(Date.now())
-    },
-    {
-      title: "Harry Potter",
-      author: "J K Rowling",
-      plot: "Persone molto disadattate",
-      isbn: "XXXXXXXX",
-      createdAt: new Date(Date.now())
-    },
-    {
-      title: "Lord of the Rings",
-      author: "Tolkien",
-      plot: "Strani elfi e nani con strani anelli",
-      isbn: "XXXXXXXX",
-      createdAt: new Date(Date.now())
-    },
-    {
-      title: "Gone",
-      author: "Michael Grant",
-      plot: "Strani ragazzi con strani poteri",
-      isbn: "XXXXXXXX",
-      createdAt: new Date(Date.now())
-    },
-  ]
+  books: BookData[] = []
 
   books$ = new Observable<BookData[]>()
 
@@ -53,9 +24,9 @@ export class BooksContainerComponent implements OnInit {
           tap(() => this.loading = true),
           switchMap(() => this.booksService.getAllBooks(undefined)),
           map(books => {
-            this.books = books
+            this.books = books.list
             this.loading = false
-            return books
+            return books.list
           }),
           catchError((err) => {
             this.loading = false
