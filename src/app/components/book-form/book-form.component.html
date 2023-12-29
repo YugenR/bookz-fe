@@ -1,0 +1,65 @@
+<div [formGroup]="bookForm" class="flex flex-col">
+
+  <mat-form-field>
+
+    <mat-label>Title</mat-label>
+    <input
+      formControlName="title"
+      id="title"
+      matInput
+      type="text">
+    <mat-error *ngIf="bookForm.controls['title'].errors?.['required']">
+      Title is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-label>Author</mat-label>
+    <input
+      formControlName="author"
+      id="author"
+      matInput
+      type="text">
+    <mat-error *ngIf="bookForm.controls['author'].errors?.['required']">
+      Author is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-label>Plot</mat-label>
+    <textarea
+              cdkAutosizeMinRows="5"
+              cdkTextareaAutosize
+              formControlName="plot"
+              id="plot"
+              matInput>
+            </textarea>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="!this._book.isbn">
+    <mat-label>ISBN</mat-label>
+    <input
+      formControlName="isbn"
+      id="isbn"
+      matInput
+      type="text">
+    <mat-error *ngIf="bookForm.controls['isbn'].errors?.['required']"
+    >
+      ISBN is mandatory
+    </mat-error>
+  </mat-form-field>
+
+
+  <button
+    (click)="_book.isbn ? updateBook(_book.isbn) : createBook()"
+    [disabled]="bookForm.invalid || saving || !bookForm.dirty"
+    color="primary"
+    class="bg-blue-500 text-white px-4 py-2 rounded"
+    mat-raised-button
+  >
+    <mat-icon>check</mat-icon>
+    &nbsp;<span class="hidden md:inline">Save</span>
+  </button>
+</div>
