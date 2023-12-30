@@ -17,7 +17,7 @@
   </div>
   <div class="flex items-center ml-16">
     <span class="label-text">Global library&nbsp;</span>
-    <input [(ngModel)]="personalLibrary" type="checkbox" class="toggle toggle-success" checked/>
+    <input (ngModelChange)="personalLibrary = $event; reload$.subscribe()" [(ngModel)]="personalLibrary" type="checkbox" class="toggle toggle-success" checked/>
     <span class="label-text">&nbsp;My library</span>
   </div>
 </div>

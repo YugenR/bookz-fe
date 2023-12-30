@@ -80,6 +80,13 @@ export class BooksContainerComponent implements OnInit {
           switchMap(() => this.booksService.getAllBooks(this.fetchParams)),
           map(books => {
             this.books = books.list
+
+            if (this.personalLibrary) {
+              console.log(this.books)
+              this.books = this.books.filter(book => this.isInLibrary(book.isbn))
+              console.log(this.books)
+            }
+
             return books.list
           }),
           catchError((err) => {
@@ -198,12 +205,6 @@ export class BooksContainerComponent implements OnInit {
         error: () => this.popToast(true)
         }
       )
-  }
-
-
-
-  emitValue(value: string, $event: KeyboardEvent) {
-    console.log(value)
   }
 
   loadKeyword($event: any) {
