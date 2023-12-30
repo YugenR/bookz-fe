@@ -4,102 +4,120 @@
   </div>
 </ng-template>
 
-<div class="mb-3 flex justify-center flex-wrap gap-3">
-  <search-box (load)="loadKeyword($event)"></search-box>
-<!--  Sort field-->
-  <div class="join" id="by">
-    <input *ngFor="let field of ['title', 'author', 'isbn']" (click)="changeSortField(field)"
-           class="join-item btn btn-square" type="radio"
-           name="by" [value]="field"
-           [attr.aria-label]="capitalizeFirstLetter(field)" [checked]="field == 'title'"/>
-  </div>
-<!--  Sort direction-->
-  <div class="join items-center" id="sort">
-    <input *ngFor="let dir of ['ASC', 'DESC']" (click)="changeSortDir(dir)"
-           class="join-item btn btn-md btn-square" type="radio"
-           name="sort" [value]="dir"
-           [attr.aria-label]="dir" [checked]="dir == 'ASC'"/>
-  </div>
-<!--  Page size-->
-  <div class="join items-center" id="page-size">
-    <input *ngFor="let pageSize of [2, 5, 10]" (click)="changePageSize(pageSize)"
-           class="join-item btn btn-xs btn-square" type="radio"
-           name="page-size" [value]="pageSize"
-           [attr.aria-label]="pageSize" [checked]="pageSize == 2"/>
-  </div>
+<ng-container *ngIf="!showDetail">
 
-<!--  Page number-->
-  <div class="join items-center" id="pageNumber">
-    <input *ngFor="let pageNumber of [].constructor(numberOfPages); let i = index"
-           (click)="changePageNumber(i)"
-           class="join-item btn btn-xs btn-square" type="radio"
-           name="page-number" [value]="i + 1"
-           [attr.aria-label]="i + 1" [checked]="i -1"/>
-  </div>
+  <div class="mb-3 flex justify-center flex-wrap gap-3">
+    <search-box (load)="loadKeyword($event)"></search-box>
+    <!--  Sort field-->
+    <div class="join" id="by">
+      <input *ngFor="let field of ['title', 'author', 'isbn']" (click)="changeSortField(field)"
+             class="join-item btn btn-square" type="radio"
+             name="by" [value]="field"
+             [attr.aria-label]="capitalizeFirstLetter(field)" [checked]="field == 'title'"/>
+    </div>
+    <!--  Sort direction-->
+    <div class="join items-center" id="sort">
+      <input *ngFor="let dir of ['ASC', 'DESC']" (click)="changeSortDir(dir)"
+             class="join-item btn btn-md btn-square" type="radio"
+             name="sort" [value]="dir"
+             [attr.aria-label]="dir" [checked]="dir == 'ASC'"/>
+    </div>
+    <!--  Page size-->
+    <div class="join items-center" id="page-size">
+      <input *ngFor="let pageSize of [2, 5, 10]" (click)="changePageSize(pageSize)"
+             class="join-item btn btn-xs btn-square" type="radio"
+             name="page-size" [value]="pageSize"
+             [attr.aria-label]="pageSize" [checked]="pageSize == 2"/>
+    </div>
 
-  <!--  Library toggle-->
-  <div class="flex items-center ml-16">
-    <span class="label-text">Global library&nbsp;</span>
-    <input (ngModelChange)="personalLibrary = $event; reload$.subscribe()" [(ngModel)]="personalLibrary" type="checkbox" class="toggle toggle-success" checked/>
-    <span class="label-text">&nbsp;My library</span>
+    <!--  Page number-->
+    <div class="join items-center" id="pageNumber">
+      <input *ngFor="let pageNumber of [].constructor(numberOfPages); let i = index"
+             (click)="changePageNumber(i)"
+             class="join-item btn btn-xs btn-square" type="radio"
+             name="page-number" [value]="i + 1"
+             [attr.aria-label]="i + 1" [checked]="i -1"/>
+    </div>
+
+    <!--  Library toggle-->
+    <div class="flex items-center ml-16">
+      <span class="label-text">Global library&nbsp;</span>
+      <input (ngModelChange)="personalLibrary = $event; reload$.subscribe()" [(ngModel)]="personalLibrary"
+             type="checkbox" class="toggle toggle-success" checked/>
+      <span class="label-text">&nbsp;My library</span>
+    </div>
   </div>
-</div>
 
   <!--  Cards container-->
-<div class="flex flex-wrap justify-center gap-2" *ngIf="!loading else loadingTemplate">
-  <book-card (edit)="editBook(book.isbn)" (delete)="deleteBook(book.isbn)" [isInLibrary]="isInLibrary(book.isbn)"
-             [readCount]="user.books[book.isbn]" [book]="book"
-             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"
-             (remove)="removeFromLibrary(book.isbn)"
-             [personalLibrary]="personalLibrary"
-  >
-  </book-card>
+  <div class="flex flex-wrap justify-center gap-2" *ngIf="!loading else loadingTemplate">
+    <book-card
+      *ngFor="let book of books"
+      [isInLibrary]="isInLibrary(book.isbn)"
+      [readCount]="user.books[book.isbn]"
+      [book]="book"
+      (edit)="editBook(book.isbn)"
+      (delete)="deleteBook(book.isbn)"
+      (read)="readThisBook(book.isbn)"
+      (add)="addToLibrary(book.isbn)"
+      (remove)="removeFromLibrary(book.isbn)"
+      [personalLibrary]="personalLibrary"
+      (detail)="bookDetailToShow = book;showDetail = true"
+    >
+    </book-card>
 
-<!--  Global library card-->
-  <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="!personalLibrary">
-    <div class="card-body">
-      <h2 class="card-title">A new wonderful journey</h2>
-      <h3>Author: An unpredictable mind</h3>
-      <p class="italic">Plot: Something you're about to unfold</p>
-      <div class="card-actions justify-end">
+    <!--  Global library card-->
+    <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="!personalLibrary">
+      <div class="card-body">
+        <h2 class="card-title">A new wonderful journey</h2>
+        <h3>Author: An unpredictable mind</h3>
+        <p class="italic">Plot: Something you're about to unfold</p>
+        <div class="card-actions justify-end">
 
-        <button class="btn btn-primary" (click)="createBook()">
-          Create new book
-        </button>
+          <button class="btn btn-primary" (click)="createBook()">
+            Create new book
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--  Personal library card-->
+    <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="personalLibrary">
+      <div class="card-body">
+        <h2 class="card-title">{{getKeys(user.books) === 0 ? "How silent..." : "Discover new"}}</h2>
+        <h3>Looks a good moment to look for a new book.</h3>
+        <p class="italic">Find what you're looking for in the Global Library.</p>
+        <div class="card-actions justify-end">
+
+          <button class="btn btn-primary" (click)="personalLibrary = false; reload$.subscribe()">
+            Seek in Global library
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!--Toasts-->
+  <div class="flex justify-center mt-3 mb-3">
+    <div *ngIf="success" class="toast-center justify-center">
+      <div class="alert bg-purple-700">
+        <span>Operation successful.</span>
+      </div>
+    </div>
+
+    <div *ngIf="failure" class="toast-center fading-element">
+      <div class="alert alert-error">
+        <span>Something went wrong.</span>
       </div>
     </div>
   </div>
+</ng-container>
 
-  <!--  Personal library card-->
-  <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="personalLibrary">
-    <div class="card-body">
-      <h2 class="card-title">How silent...</h2>
-      <h3>Looks a good moment to look for a new book.</h3>
-      <p class="italic">Find what you're looking for in the Global Library.</p>
-      <div class="card-actions justify-end">
+<book-detail *ngIf="showDetail"
+             [isbn]="bookDetailToShow.isbn"
+             [user]="user"
+             (back)="showDetail = false"
 
-        <button class="btn btn-primary" (click)="personalLibrary = false; reload$.subscribe()">
-          Seek in Global library
-        </button>
-      </div>
-    </div>
-  </div>
-
-</div>
-<!--Toasts-->
-<div class="flex justify-center mt-3 mb-3">
-  <div *ngIf="success" class="toast-center justify-center">
-    <div class="alert bg-purple-700">
-      <span>Operation successful.</span>
-    </div>
-  </div>
-
-  <div *ngIf="failure" class="toast-center fading-element">
-    <div class="alert alert-error">
-      <span>Something went wrong.</span>
-    </div>
-  </div>
-</div>
+></book-detail>
 
 
 

@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {UsersContainerComponent} from "./containers/users-container-component/users-container.component";
 import {PublicContainerComponent} from "./containers/public-container/public-container.component";
 import {PrivateContainerComponent} from "./containers/private-container/private-container.component";
 import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
+import {BookDetailComponent} from "./components/book-detail/book-detail.component";
 
 const routes: Routes = [
   {
@@ -20,27 +21,24 @@ const routes: Routes = [
         component: UsersContainerComponent
       },
       {
-        path: 'reserved/:userId',
+        path: 'reserved',
         component: PrivateContainerComponent,
         children: [
           {
-            path: "books",
-            component: BooksContainerComponent,
-          },
-          {
-            path: "",
-            component: BooksContainerComponent,
+            path: ":userId",
+            component: BooksContainerComponent
           }
         ]
-      },
+      }
     ]
   },
-  { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' },
+  {path: '', redirectTo: '', pathMatch: 'full'},
+  {path: '**', redirectTo: '/login'},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

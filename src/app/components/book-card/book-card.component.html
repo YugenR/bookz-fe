@@ -10,6 +10,9 @@
     <p *ngIf="showReadCount">Read count: {{readCount}}</p>
     <div class="card-actions justify-end">
 
+      <button class="btn btn-info" (click)="showDetail()">
+        Detail
+      </button>
       <button *ngIf="isInLibrary" class="btn btn-primary" (click)="readThisBook()">
         {{readCount == 0 ? "Read" : "Read again"}}
       </button>
