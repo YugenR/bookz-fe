@@ -49,7 +49,7 @@
 <div class="flex flex-wrap justify-center gap-2" *ngIf="!loading else loadingTemplate">
   <book-card (edit)="editBook(book.isbn)" (delete)="deleteBook(book.isbn)" [isInLibrary]="isInLibrary(book.isbn)"
              [readCount]="user.books[book.isbn]" [book]="book"
-             *ngFor="let book of booksToSHow" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"
+             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"
              (remove)="removeFromLibrary(book.isbn)"
              [personalLibrary]="personalLibrary"
   >
