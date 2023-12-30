@@ -1,11 +1,5 @@
-.card-compact p {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to show before truncation */
-}
-
 .card-compact {
   max-height: 600px;
   min-height: 400px;
-  max-width: 400px;
+  max-width: 800px;
 }
