@@ -91,15 +91,22 @@ export class BooksContainerComponent implements OnInit {
           }),
           map(books => {
 
-            this.books.push(...books.list)
+            this.books = books.list
             this.numEntities = books.num
             this.booksToSHow = books.list
 
             // Raw number of pages (can be decimal)
-            let result = this.numEntities / this.fetchParams.num
+            let result = books.num / this.fetchParams.num
 
-            if (this.numEntities % this.fetchParams.num !== 0)
+            this.numberOfPages = result
+
+            // If it's decimal, I floor the number and add 1
+            if (books.num % this.fetchParams.num !== 0)
               this.numberOfPages = Math.floor(result) + 1
+
+            // If it's 0, we're still at page 1
+            if (this.numberOfPages === 0)
+                this.numberOfPages = 1
 
             return books.list
           }),
@@ -125,8 +132,10 @@ export class BooksContainerComponent implements OnInit {
 
     this.reload$ = of(true)
       .pipe(
+        tap(() => this.loading = true),
         switchMap(() => this.user$),
         switchMap(() => this.books$),
+        tap(() => this.loading = false),
         catchError(() => {
           this.loading = false
           return EMPTY;
