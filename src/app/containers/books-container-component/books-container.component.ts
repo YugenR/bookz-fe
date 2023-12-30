@@ -43,6 +43,8 @@ export class BooksContainerComponent implements OnInit {
   observable$ = new Observable<BookData[]>;
   reload$ = new Observable<BookData[]>;
   personalLibrary = true;
+  bookDetailToShow: BookData = {} as BookData;
+  showDetail = false
 
   constructor(
     private booksService: BooksService,

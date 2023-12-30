@@ -19,6 +19,7 @@ export class BookCardComponent implements OnInit {
   @Output() remove = new EventEmitter<void>()
   @Output() edit = new EventEmitter<void>()
   @Output() delete = new EventEmitter<void>()
+  @Output() detail = new EventEmitter<void>()
 
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -48,8 +49,8 @@ export class BookCardComponent implements OnInit {
     this.remove.emit()
   }
 
-  bookDetail(isbn: string) {
-    // this.router.navigate(["books", isbn]).then();
-    this.router.navigate(["books/ISBN-HP"]).then();
+  showDetail() {
+    this.detail.emit()
   }
+
 }

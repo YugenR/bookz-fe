@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BookDetail} from "../../interfaces/book";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BooksService} from "../../services/books.service";
 import {catchError, EMPTY, Observable, of, switchMap, tap} from "rxjs";
 import {map} from "rxjs/operators";
+import {UserDetail} from "../../interfaces/user";
 
 @Component({
   selector: 'book-detail',
@@ -14,8 +15,12 @@ export class BookDetailComponent implements OnInit {
 
   @Input() readCount = 0
   @Input() totalReadCount = 10
+  @Input() isbn: string = ""
   book: BookDetail = {} as BookDetail
+  @Input() user: UserDetail = {} as UserDetail
   book$ = new Observable<BookDetail>()
+  @Output() back = new EventEmitter<void>()
+
 
   loading = false
 
@@ -25,18 +30,12 @@ export class BookDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    let isbn: string | null = null;
-
-    activatedRoute.paramMap.subscribe(paramMap => {
-      if (paramMap.has("isbn"))
-        isbn = paramMap.get("isbn")!
-    })
 
     this.book$ =
       of(true)
         .pipe(
           tap(() => this.loading = true),
-          switchMap(() => this.booksService.getBook(isbn!)),
+          switchMap(() => this.booksService.getBook(this.isbn)),
           map(book => {
             this.book = book
             return book
@@ -55,6 +54,12 @@ export class BookDetailComponent implements OnInit {
   }
 
   backToBooks() {
-    this.router.navigate(["/login"])
+    this.back.emit()
+  }
+
+  getMyReadCount() {
+    console.log(this.user.books)
+    console.log(this.user.books[this.book.isbn])
+    return this.user.books[this.book.isbn]
   }
 }

@@ -24,6 +24,7 @@ export interface BookDetail {
   author: string
   isbn: string
   plot: string
+  timesRead: number
   createdAt: Date
 }
 

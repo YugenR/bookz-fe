@@ -36,7 +36,7 @@ export class BooksService {
 
     return this.http
       .get(`${this.crtlFullPath}/${isbn}`)
-      .pipe(map(value => value as BookData))
+      .pipe(map(value => value as BookDetail))
   }
 
   public checkIsbnAvailability(isbn: string): Observable<IsbnCheckResponse> {
