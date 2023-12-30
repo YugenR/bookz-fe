@@ -24,6 +24,11 @@ export class BooksContainerComponent implements OnInit {
   defaultSortColumn = "title"
   direction = "ASC"
 
+  // Total number of books in repository
+  numEntities = 0
+  // Current number of pages based on current page size
+  numberOfPages = 0
+
   success = false
   failure = false
 
@@ -31,6 +36,7 @@ export class BooksContainerComponent implements OnInit {
   user = {} as UserDetail
 
   books: BookData[] = []
+  booksToSHow: BookData[] = []
 
   books$ = new Observable<BookData[]>()
   user$ = new Observable<UserDetail>()
@@ -77,15 +83,23 @@ export class BooksContainerComponent implements OnInit {
     this.books$ =
       of(true)
         .pipe(
-          switchMap(() => this.booksService.getAllBooks(this.fetchParams)),
+          switchMap(() => {
+            if (!this.personalLibrary)
+              return this.booksService.getAllBooks(this.fetchParams)
+            else
+              return this.booksService.getUserBooks(userId!, this.fetchParams)
+          }),
           map(books => {
-            this.books = books.list
 
-            if (this.personalLibrary) {
-              console.log(this.books)
-              this.books = this.books.filter(book => this.isInLibrary(book.isbn))
-              console.log(this.books)
-            }
+            this.books.push(...books.list)
+            this.numEntities = books.num
+            this.booksToSHow = books.list
+
+            // Raw number of pages (can be decimal)
+            let result = this.numEntities / this.fetchParams.num
+
+            if (this.numEntities % this.fetchParams.num !== 0)
+              this.numberOfPages = Math.floor(result) + 1
 
             return books.list
           }),
@@ -121,7 +135,8 @@ export class BooksContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.observable$.subscribe(() => {})
+    this.observable$.subscribe(() => {
+    })
   }
 
   logMe(x: any) {
@@ -177,8 +192,9 @@ export class BooksContainerComponent implements OnInit {
       .afterClosed()
       .pipe(switchMap(value => value ? this.books$ : EMPTY))
       .subscribe({
-        next: () => this.popToast(),
-        error: () => this.popToast(true),        }
+          next: () => this.popToast(),
+          error: () => this.popToast(true),
+        }
       )
 
   }
@@ -198,8 +214,9 @@ export class BooksContainerComponent implements OnInit {
           .afterClosed()
           .pipe(switchMap(value => value ? this.books$ : EMPTY))
           .subscribe({
-            next: () => this.popToast(),
-            error: () => this.popToast(true),            }
+              next: () => this.popToast(),
+              error: () => this.popToast(true),
+            }
           )
       })
   }
@@ -212,8 +229,8 @@ export class BooksContainerComponent implements OnInit {
         switchMap(() => this.books$)
       )
       .subscribe({
-        next: () => this.popToast(),
-        error: () => this.popToast(true)
+          next: () => this.popToast(),
+          error: () => this.popToast(true)
         }
       )
   }
@@ -223,15 +240,31 @@ export class BooksContainerComponent implements OnInit {
     this.reload$.subscribe()
 
   }
-  sortField(sortField: string) {
+
+  changeSortField(sortField: string) {
     this.fetchParams.sort = `${sortField} ${this.fetchParams.sort.split(" ")[1]}`
     this.reload$.subscribe()
   }
 
-  sortDir(sortDir: string) {
+  changeSortDir(sortDir: string) {
     this.fetchParams.sort = `${this.fetchParams.sort.split(" ")[0]} ${sortDir}`
     this.reload$.subscribe()
   }
+
+  changePageSize(pageSize: number) {
+    this.fetchParams.num = pageSize
+    this.reload$.subscribe()
+  }
+
+  changePageNumber(pageNumber: number) {
+    this.fetchParams.page = pageNumber
+    this.reload$.subscribe()
+  }
+
+  capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   private popToast(isError = false) {
     if (isError) {
       this.failure = true
@@ -240,9 +273,5 @@ export class BooksContainerComponent implements OnInit {
       this.success = true
       setTimeout(() => this.success = false, 3000)
     }
-  }
-
-  capitalizeFirstLetter(word: string) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 }
