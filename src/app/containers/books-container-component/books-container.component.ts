@@ -70,6 +70,7 @@ export class BooksContainerComponent implements OnInit {
           switchMap(() => this.usersService.getUser(userId!)),
           map(user => {
             this.user = user
+            console.log(user.books)
             return user
           }),
           catchError((err) => {
@@ -282,5 +283,9 @@ export class BooksContainerComponent implements OnInit {
       this.success = true
       setTimeout(() => this.success = false, 3000)
     }
+  }
+
+  getKeys(books: { [p: string]: number }) {
+    return Object.keys(books).length
   }
 }

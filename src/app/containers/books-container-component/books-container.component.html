@@ -73,7 +73,7 @@
   <!--  Personal library card-->
   <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="personalLibrary">
     <div class="card-body">
-      <h2 class="card-title">How silent...</h2>
+      <h2 class="card-title">{{getKeys(user.books) === 0 ? "How silent..." : "Discover new"}}</h2>
       <h3>Looks a good moment to look for a new book.</h3>
       <p class="italic">Find what you're looking for in the Global Library.</p>
       <div class="card-actions justify-end">
