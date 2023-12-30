@@ -6,15 +6,38 @@
 
 <div class="mb-3 flex justify-center flex-wrap gap-3">
   <search-box (load)="loadKeyword($event)"></search-box>
+<!--  Sort field-->
   <div class="join" id="by">
-    <input *ngFor="let field of ['title', 'author', 'isbn']" (click)="sortField(field)" class="join-item btn btn-square" type="radio" name="by" [value]="field"
-           [attr.aria-label]="capitalizeFirstLetter(field)" [checked]="field == 'Title'"/>
+    <input *ngFor="let field of ['title', 'author', 'isbn']" (click)="changeSortField(field)"
+           class="join-item btn btn-square" type="radio"
+           name="by" [value]="field"
+           [attr.aria-label]="capitalizeFirstLetter(field)" [checked]="field == 'title'"/>
   </div>
-  <div class="join" id="sort">
-    <input *ngFor="let dir of ['ASC', 'DESC']" (click)="sortDir(dir)" class="join-item btn btn-square" type="radio"
+<!--  Sort direction-->
+  <div class="join items-center" id="sort">
+    <input *ngFor="let dir of ['ASC', 'DESC']" (click)="changeSortDir(dir)"
+           class="join-item btn btn-md btn-square" type="radio"
            name="sort" [value]="dir"
            [attr.aria-label]="dir" [checked]="dir == 'ASC'"/>
   </div>
+<!--  Page size-->
+  <div class="join items-center" id="page-size">
+    <input *ngFor="let pageSize of [2, 5, 10]" (click)="changePageSize(pageSize)"
+           class="join-item btn btn-xs btn-square" type="radio"
+           name="page-size" [value]="pageSize"
+           [attr.aria-label]="pageSize" [checked]="pageSize == 2"/>
+  </div>
+
+<!--  Page number-->
+  <div class="join items-center" id="pageNumber">
+    <input *ngFor="let pageNumber of [].constructor(numberOfPages); let i = index"
+           (click)="changePageNumber(i)"
+           class="join-item btn btn-xs btn-square" type="radio"
+           name="page-number" [value]="i + 1"
+           [attr.aria-label]="i + 1" [checked]="i -1"/>
+  </div>
+
+  <!--  Library toggle-->
   <div class="flex items-center ml-16">
     <span class="label-text">Global library&nbsp;</span>
     <input (ngModelChange)="personalLibrary = $event; reload$.subscribe()" [(ngModel)]="personalLibrary" type="checkbox" class="toggle toggle-success" checked/>
@@ -22,10 +45,11 @@
   </div>
 </div>
 
+  <!--  Cards container-->
 <div class="flex flex-wrap justify-center gap-2" *ngIf="!loading else loadingTemplate">
   <book-card (edit)="editBook(book.isbn)" (delete)="deleteBook(book.isbn)" [isInLibrary]="isInLibrary(book.isbn)"
              [readCount]="user.books[book.isbn]" [book]="book"
-             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"
+             *ngFor="let book of booksToSHow" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"
              (remove)="removeFromLibrary(book.isbn)"
              [personalLibrary]="personalLibrary"
   >
@@ -62,6 +86,7 @@
   </div>
 
 </div>
+<!--Toasts-->
 <div class="flex justify-center mt-3 mb-3">
   <div *ngIf="success" class="toast-center justify-center">
     <div class="alert bg-purple-700">

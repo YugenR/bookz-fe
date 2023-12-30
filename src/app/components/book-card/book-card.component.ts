@@ -26,7 +26,6 @@ export class BookCardComponent implements OnInit {
   ngOnInit(): void {
     if (!this.readCount)
       this.readCount = 0
-    console.log(this.book)
 
   }
 

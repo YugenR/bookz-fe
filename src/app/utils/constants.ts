@@ -6,7 +6,7 @@ export class Constants {
   }
   static pagination = {
     defaultPage: 0,
-    defaultPageSize: 10
+    defaultPageSize: 2
   }
 
 }

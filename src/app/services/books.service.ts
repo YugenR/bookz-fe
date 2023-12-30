@@ -26,6 +26,12 @@ export class BooksService {
       .pipe(map(value => value as PageConverter<BookData>))
   }
 
+  public getUserBooks(userId: number, paginationParams: FetchParams | undefined): Observable<PageConverter<BookData>> {
+    let sortFilterParams = new HttpParams({fromObject: {...paginationParams}})
+    return this.http
+      .get(`${environment.apiUrl}/${Constants.entities.users}/${userId}/${Constants.entities.books}`, {params: sortFilterParams})
+      .pipe(map(value => value as PageConverter<BookData>))
+  }
   public getBook(isbn: string): Observable<BookDetail> {
 
     return this.http
