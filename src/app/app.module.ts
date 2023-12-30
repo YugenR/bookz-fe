@@ -25,6 +25,7 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
 import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent]
