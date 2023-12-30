@@ -16,7 +16,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {UserFormComponent} from "./components/user-form/user-form.component";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 import {AlertDialogComponent} from "./components/alert-dialog/alert-dialog.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -56,7 +56,8 @@ import {NgOptimizedImage} from "@angular/common";
     MatInputModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,9 @@
 <div class="card card-compact card-bordered border-purple-900 w-50 bg-base-100 shadow-xl">
   <div class="card-body">
-    <h2 class="card-title">{{book.title}}</h2>
+    <div class="flex flex-row items-center">
+      <h2 class="card-title">{{book.title}}</h2>
+      <div *ngIf="!isInLibrary" class="ml-4 badge badge-outline border-amber-500 justify-end">NEW</div>
+    </div>
     <h3>Author: {{book.author}}</h3>
     <h3>ISBN: {{book.isbn}}</h3>
     <p class="italic">Plot: {{book?.plot}}</p>
@@ -17,8 +20,11 @@
       <button class="btn btn-accent" (click)="editBook()">
         Edit
       </button>
-      <button class="btn bg-red-500" (click)="deleteBook()">
+      <button *ngIf="!personalLibrary" class="btn bg-red-500" (click)="deleteBook()">
         Delete
+      </button>
+      <button *ngIf="personalLibrary" class="btn bg-red-500" (click)="removeBook()">
+        Remove
       </button>
     </div>
   </div>

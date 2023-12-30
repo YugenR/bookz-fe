@@ -51,13 +51,13 @@
       *ngIf="checkingIsbn && bookForm.value.isbn"
       matSuffix>
     </mat-spinner>
-    <mat-icon *ngIf="!checkingIsbn && IsbnAlreadyInUse"
+    <mat-icon *ngIf="!checkingIsbn && isbnAlreadyInUse"
               color="warn"
               matSuffix
     >
       warning
     </mat-icon>
-    <mat-icon color="primary" *ngIf="!checkingIsbn && !IsbnAlreadyInUse && bookForm.controls['isbn'].dirty"
+    <mat-icon color="primary" *ngIf="!checkingIsbn && !isbnAlreadyInUse && bookForm.controls['isbn'].dirty"
               matSuffix>done
     </mat-icon>
     <mat-error *ngIf="bookForm.controls['isbn'].errors?.['required']"
@@ -66,13 +66,13 @@
     </mat-error>
   </mat-form-field>
 
-  <p class="mat-error mb-2" *ngIf="!checkingIsbn && IsbnAlreadyInUse">A book with this ISBN already exists in
+  <p class="mat-error mb-2" *ngIf="!checkingIsbn && isbnAlreadyInUse">A book with this ISBN already exists in
     global library: "{{alreadyUsedBookTitle}}"</p>
 
 
   <button
     (click)="_book.isbn ? updateBook(_book.isbn) : createBook()"
-    [disabled]="bookForm.invalid || saving || !bookForm.dirty || IsbnAlreadyInUse || checkingIsbn"
+    [disabled]="bookForm.invalid || saving || !bookForm.dirty || isbnAlreadyInUse || checkingIsbn"
     color="primary"
     mat-raised-button
   >

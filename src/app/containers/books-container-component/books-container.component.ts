@@ -36,6 +36,7 @@ export class BooksContainerComponent implements OnInit {
   user$ = new Observable<UserDetail>()
   observable$ = new Observable<BookData[]>;
   reload$ = new Observable<BookData[]>;
+  personalLibrary = true;
 
   constructor(
     private booksService: BooksService,
@@ -67,7 +68,7 @@ export class BooksContainerComponent implements OnInit {
           }),
           catchError((err) => {
             this.loading = false
-            //todo error
+            this.popToast(true)
             console.log(err)
             return EMPTY;
           })
@@ -79,11 +80,18 @@ export class BooksContainerComponent implements OnInit {
           switchMap(() => this.booksService.getAllBooks(this.fetchParams)),
           map(books => {
             this.books = books.list
+
+            if (this.personalLibrary) {
+              console.log(this.books)
+              this.books = this.books.filter(book => this.isInLibrary(book.isbn))
+              console.log(this.books)
+            }
+
             return books.list
           }),
           catchError((err) => {
             this.loading = false
-            //todo error
+            this.popToast(true)
             console.log(err)
             return EMPTY;
           })
@@ -142,6 +150,17 @@ export class BooksContainerComponent implements OnInit {
 
   }
 
+  removeFromLibrary(isbn: string) {
+    of(true)
+      .pipe(
+        switchMap(() => this.booksService.removeFromLibrary(this.user.id, isbn)),
+        switchMap(() => this.reload$),
+      )
+      .subscribe(value => {
+      })
+
+  }
+
   isInLibrary(isbn: string) {
     return this.user.books[isbn] !== undefined
   }
@@ -171,7 +190,7 @@ export class BooksContainerComponent implements OnInit {
 
         this.dialogService.open(GeneralDialogComponent, {
           data: {
-            dialogTitle: 'Edit book',
+            dialogTitle: 'Edit existing book',
             componentData: {book: book},
             component: BookFormComponent
           }
@@ -199,12 +218,6 @@ export class BooksContainerComponent implements OnInit {
       )
   }
 
-
-
-  emitValue(value: string, $event: KeyboardEvent) {
-    console.log(value)
-  }
-
   loadKeyword($event: any) {
     this.fetchParams.keyword = $event.keyword
     this.reload$.subscribe()
@@ -227,5 +240,9 @@ export class BooksContainerComponent implements OnInit {
       this.success = true
       setTimeout(() => this.success = false, 3000)
     }
+  }
+
+  capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 }

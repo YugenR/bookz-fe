@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {UserCreate, UserData, UserDetail, UserUpdate} from "../interfaces/user";
 import {FetchParams, PageConverter} from "../interfaces/pagination";
+import {IsbnCheckResponse} from "../interfaces/book";
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,13 @@ export class UsersService {
       .delete(`${this.crtlFullPath}/${userId}`)
       .pipe(map(() => {
       }))
+  }
+
+  public checkEmailAvailability(email: string): Observable<boolean> {
+
+    return this.http
+      .get(`${this.crtlFullPath}/${email}/check`)
+      .pipe(map(value => value as boolean))
   }
 
 }

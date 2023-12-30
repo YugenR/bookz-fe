@@ -76,4 +76,12 @@ export class BooksService {
       }))
   }
 
+  public removeFromLibrary(userId: number, isbn: string): Observable<void> {
+    return this.http
+      .delete(
+        `${environment.apiUrl}/${Constants.entities.users}/${userId}/${Constants.entities.books}/${isbn}`)
+      .pipe(map(() => {
+      }))
+  }
+
 }
