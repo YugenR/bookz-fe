@@ -4,7 +4,7 @@
   </div>
 </ng-template>
 
-<div class="mb-3 flex justify-center flex-row gap-3">
+<div class="mb-3 flex justify-center flex-wrap gap-3">
   <search-box (load)="loadKeyword($event)"></search-box>
   <div class="join" id="by">
     <input (click)="sortField('title')" class="join-item btn btn-square" type="radio" name="by" value="title" aria-label="Title" checked />
