@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BooksService} from "../../services/books.service";
 import {BookCreate, BookDetail, BookUpdate} from "../../interfaces/book";
 import {MatDialogRef} from "@angular/material/dialog";
 import {GeneralDialogComponent} from "../general-dialog/general-dialog.component";
+import {delay, of, Subscription, switchMap} from "rxjs";
 
 @Component({
   selector: 'book-form',
@@ -15,9 +16,14 @@ export class BookFormComponent {
   // The reference to the MatDialog the form is inside which
   dialogRef!: MatDialogRef<GeneralDialogComponent>
 
+  timeout?: Subscription;
+
   bookForm: FormGroup;
   formEntity: BookCreate = {} as BookCreate
   saving = false
+  checkingIsbn = false
+  IsbnAlreadyInUse = false
+  alreadyUsedBookTitle = ""
 
   constructor(
     private booksService: BooksService,
@@ -33,7 +39,6 @@ export class BookFormComponent {
   _book: BookDetail = {} as BookDetail
 
   @Input() set book(value: BookDetail) {
-    console.log("Input book", value)
     this._book = value
     this.bookForm.controls["isbn"].clearValidators()
     this.bookForm.patchValue(this._book)
@@ -85,6 +90,31 @@ export class BookFormComponent {
           this.dialogRef.close(book)
 
         this.saving = false
+      })
+  }
+
+  checkIsbnAvailability(event: KeyboardEvent) {
+    this.checkingIsbn = true
+    if (this.timeout !== undefined && !this.timeout.closed)
+      this.timeout.unsubscribe()
+
+    this.timeout = of(event)
+      .pipe(
+        delay(1000),
+        switchMap((ev: KeyboardEvent) => {
+          if (ev.key.toLowerCase() != 'enter' && this.bookForm.value.isbn) {
+            this.IsbnAlreadyInUse = false
+            return this.booksService
+              .checkIsbnAvailability(this.bookForm.value.isbn)
+          }
+          return of({isUsed: false, title: ""})
+        })
+      ).subscribe(value => {
+        this.IsbnAlreadyInUse = value.isUsed
+        this.alreadyUsedBookTitle = value.title
+        this.bookForm.controls['isbn'].errors?.['unique']
+
+        this.checkingIsbn = false
       })
   }
 }

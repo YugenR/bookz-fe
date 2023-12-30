@@ -26,3 +26,9 @@ export interface BookDetail {
   plot: string
   createdAt: Date
 }
+
+export interface IsbnCheckResponse {
+  isUsed: boolean
+
+  title: string
+}

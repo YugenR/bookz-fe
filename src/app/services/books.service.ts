@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {Constants} from "../utils/constants";
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BookCreate, BookData, BookDetail, BookUpdate} from "../interfaces/book";
+import {BookCreate, BookData, BookDetail, BookUpdate, IsbnCheckResponse} from "../interfaces/book";
 import {FetchParams, PageConverter} from "../interfaces/pagination";
 
 @Injectable({
@@ -31,6 +31,13 @@ export class BooksService {
     return this.http
       .get(`${this.crtlFullPath}/${isbn}`)
       .pipe(map(value => value as BookData))
+  }
+
+  public checkIsbnAvailability(isbn: string): Observable<IsbnCheckResponse> {
+
+    return this.http
+      .get(`${this.crtlFullPath}/${isbn}/check`)
+      .pipe(map(value => value as IsbnCheckResponse))
   }
 
   public createBook(book: BookCreate): Observable<BookDetail> {
@@ -68,4 +75,5 @@ export class BooksService {
       .pipe(map(() => {
       }))
   }
+
 }
