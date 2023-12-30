@@ -172,7 +172,7 @@ export class BooksContainerComponent implements OnInit {
 
         this.dialogService.open(GeneralDialogComponent, {
           data: {
-            dialogTitle: 'Edit book',
+            dialogTitle: 'Edit existing book',
             componentData: {book: book},
             component: BookFormComponent
           }

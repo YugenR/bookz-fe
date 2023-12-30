@@ -22,7 +22,7 @@ export class BookFormComponent {
   formEntity: BookCreate = {} as BookCreate
   saving = false
   checkingIsbn = false
-  IsbnAlreadyInUse = false
+  isbnAlreadyInUse = false
   alreadyUsedBookTitle = ""
 
   constructor(
@@ -103,16 +103,15 @@ export class BookFormComponent {
         delay(1000),
         switchMap((ev: KeyboardEvent) => {
           if (ev.key.toLowerCase() != 'enter' && this.bookForm.value.isbn) {
-            this.IsbnAlreadyInUse = false
+            this.isbnAlreadyInUse = false
             return this.booksService
               .checkIsbnAvailability(this.bookForm.value.isbn)
           }
           return of({isUsed: false, title: ""})
         })
       ).subscribe(value => {
-        this.IsbnAlreadyInUse = value.isUsed
+        this.isbnAlreadyInUse = value.isUsed
         this.alreadyUsedBookTitle = value.title
-        this.bookForm.controls['isbn'].errors?.['unique']
 
         this.checkingIsbn = false
       })

@@ -16,6 +16,7 @@ export class UsersContainerComponent implements OnInit {
 
   success = false
   failure = false
+  errorMessage = ""
 
   loading = false
 
@@ -33,13 +34,11 @@ export class UsersContainerComponent implements OnInit {
           map(users => {
             this.users = users.list
             this.loading = false
-            console.log(users.list)
             return users.list
           }),
           catchError((err) => {
             this.loading = false
-            //todo error
-            console.log(err)
+            this.popToast(true, err)
             return EMPTY;
           })
         )
@@ -55,16 +54,18 @@ export class UsersContainerComponent implements OnInit {
 
     this.dialogService.open(GeneralDialogComponent, {
       data: {
-        dialogTitle: 'Create user',
+        dialogTitle: 'Create new user',
         componentData: {},
         component: UserFormComponent
       },
     })
       .afterClosed()
-      .pipe(switchMap(value => value ? this.users$ : EMPTY))
+      .pipe(
+        switchMap(value => value ? this.users$ : EMPTY),
+      )
       .subscribe({
           next: () => this.popToast(),
-          error: () => this.popToast(true),
+          error: (e) => this.popToast(true, e),
         }
       )
 
@@ -77,7 +78,7 @@ export class UsersContainerComponent implements OnInit {
 
         this.dialogService.open(GeneralDialogComponent, {
           data: {
-            dialogTitle: 'Edit user',
+            dialogTitle: 'Edit existing user',
             componentData: {user: user},
             component: UserFormComponent
           }
@@ -86,7 +87,10 @@ export class UsersContainerComponent implements OnInit {
           .pipe(switchMap(value => value ? this.users$ : EMPTY))
           .subscribe({
               next: () => this.popToast(),
-              error: () => this.popToast(true),
+              error: (e) => {
+                console.log(e)
+                this.popToast(true, e)
+              },
             }
           )
       })
@@ -101,14 +105,15 @@ export class UsersContainerComponent implements OnInit {
       )
       .subscribe({
           next: () => this.popToast(),
-          error: () => this.popToast(true),
+          error: (e) => this.popToast(true, e),
         }
       )
   }
 
-  private popToast(isError = false) {
+  private popToast(isError = false, errorMessage = "") {
     if (isError) {
       this.failure = true
+      this.errorMessage = errorMessage
       setTimeout(() => this.failure = false, 3000)
     } else {
       this.success = true
