@@ -1,4 +1,5 @@
-<input type="text" placeholder="Magical research" class="input border-amber-700 w-full max-w-xs"
+<input type="text" placeholder="Magical research" class="input focus:border-amber-400 border-amber-700 w-full max-w-xs"
        #input
-       (keyup)="onKeySearch({value: input.value, key: $event.key})"/>
+       (keyup)="onKeySearch({value: input.value, key: $event.key})"
+/>
 
