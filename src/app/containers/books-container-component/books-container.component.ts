@@ -68,7 +68,7 @@ export class BooksContainerComponent implements OnInit {
           }),
           catchError((err) => {
             this.loading = false
-            //todo error
+            this.popToast(true)
             console.log(err)
             return EMPTY;
           })
@@ -84,7 +84,7 @@ export class BooksContainerComponent implements OnInit {
           }),
           catchError((err) => {
             this.loading = false
-            //todo error
+            this.popToast(true)
             console.log(err)
             return EMPTY;
           })
