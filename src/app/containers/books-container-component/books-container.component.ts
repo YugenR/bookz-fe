@@ -150,6 +150,17 @@ export class BooksContainerComponent implements OnInit {
 
   }
 
+  removeFromLibrary(isbn: string) {
+    of(true)
+      .pipe(
+        switchMap(() => this.booksService.removeFromLibrary(this.user.id, isbn)),
+        switchMap(() => this.reload$),
+      )
+      .subscribe(value => {
+      })
+
+  }
+
   isInLibrary(isbn: string) {
     return this.user.books[isbn] !== undefined
   }

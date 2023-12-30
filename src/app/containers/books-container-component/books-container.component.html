@@ -25,9 +25,14 @@
 <div class="flex flex-wrap justify-center gap-2" *ngIf="!loading else loadingTemplate">
   <book-card (edit)="editBook(book.isbn)" (delete)="deleteBook(book.isbn)" [isInLibrary]="isInLibrary(book.isbn)"
              [readCount]="user.books[book.isbn]" [book]="book"
-             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"></book-card>
+             *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"
+             (remove)="removeFromLibrary(book.isbn)"
+             [personalLibrary]="personalLibrary"
+  >
+  </book-card>
 
-  <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl">
+<!--  Global library card-->
+  <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="!personalLibrary">
     <div class="card-body">
       <h2 class="card-title">A new wonderful journey</h2>
       <h3>Author: An unpredictable mind</h3>
@@ -35,7 +40,21 @@
       <div class="card-actions justify-end">
 
         <button class="btn btn-primary" (click)="createBook()">
-          Add new book
+          Create new book
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--  Personal library card-->
+  <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl" *ngIf="personalLibrary">
+    <div class="card-body">
+      <h2 class="card-title">How silent...</h2>
+      <h3>Looks a good moment to look for a new book.</h3>
+      <div class="card-actions justify-end">
+
+        <button class="btn btn-primary" (click)="personalLibrary = false; reload$.subscribe()">
+          Seek in Global library
         </button>
       </div>
     </div>

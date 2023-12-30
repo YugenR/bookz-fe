@@ -12,8 +12,10 @@ export class BookCardComponent implements OnInit {
   @Input() book: BookData = {} as BookData
   @Input() showReadCount = true
   @Input() isInLibrary = true
+  @Input() personalLibrary = true
   @Output() read = new EventEmitter<void>()
   @Output() add = new EventEmitter<void>()
+  @Output() remove = new EventEmitter<void>()
   @Output() edit = new EventEmitter<void>()
   @Output() delete = new EventEmitter<void>()
 
@@ -41,5 +43,8 @@ export class BookCardComponent implements OnInit {
   }
   deleteBook() {
     this.delete.emit()
+  }
+  removeBook() {
+    this.remove.emit()
   }
 }
