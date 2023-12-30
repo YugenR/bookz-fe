@@ -36,6 +36,7 @@ export class BooksContainerComponent implements OnInit {
   user$ = new Observable<UserDetail>()
   observable$ = new Observable<BookData[]>;
   reload$ = new Observable<BookData[]>;
+  personalLibrary = true;
 
   constructor(
     private booksService: BooksService,
@@ -227,5 +228,9 @@ export class BooksContainerComponent implements OnInit {
       this.success = true
       setTimeout(() => this.success = false, 3000)
     }
+  }
+
+  capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 }
