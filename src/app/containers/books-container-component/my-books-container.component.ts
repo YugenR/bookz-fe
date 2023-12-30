@@ -13,11 +13,11 @@ import {FetchParams} from "../../interfaces/pagination";
 import {Constants} from "../../utils/constants";
 
 @Component({
-  selector: 'books-container-component',
-  templateUrl: './books-container.component.html',
-  styleUrls: ['./books-container.component.css']
+  selector: 'my-books-container-component',
+  templateUrl: './my-books-container.component.html',
+  styleUrls: ['./my-books-container.component.css']
 })
-export class BooksContainerComponent implements OnInit {
+export class MyBooksContainerComponent implements OnInit {
 
   // User for HTTP Params
   fetchParams: FetchParams = {} as FetchParams
