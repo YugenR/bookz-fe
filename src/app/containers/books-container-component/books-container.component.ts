@@ -13,11 +13,11 @@ import {FetchParams} from "../../interfaces/pagination";
 import {Constants} from "../../utils/constants";
 
 @Component({
-  selector: 'my-books-container-component',
-  templateUrl: './my-books-container.component.html',
-  styleUrls: ['./my-books-container.component.css']
+  selector: 'books-container-component',
+  templateUrl: './books-container.component.html',
+  styleUrls: ['./books-container.component.css']
 })
-export class MyBooksContainerComponent implements OnInit {
+export class BooksContainerComponent implements OnInit {
 
   // User for HTTP Params
   fetchParams: FetchParams = {} as FetchParams
@@ -150,7 +150,7 @@ export class MyBooksContainerComponent implements OnInit {
 
     this.dialogService.open(GeneralDialogComponent, {
       data: {
-        dialogTitle: 'Create book',
+        dialogTitle: 'Create new book',
         componentData: {},
         component: BookFormComponent
       },

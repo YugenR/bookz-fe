@@ -14,7 +14,7 @@
   <div class="flex flex-wrap justify-center gap-2">
     <user-card (edit)="editUser(user.id)" (delete)="deleteUser(user.id)" [user]="user"
                *ngFor="let user of users"></user-card>
-    <div class="card card-compact w-96 bg-purple-900 shadow-xl">
+    <div class="card card-compact card-bordered border-amber-500 w-60 bg-purple-900 shadow-xl">
       <div class="card-body">
         <h2 class="card-title">??????</h2>
         <p>Total books: ??</p>

@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookCardComponent } from './components/book-card/book-card.component';
-import { BooksContainerComponent } from './containers/books-container-component/books-container.component';
 import {HttpClientModule} from "@angular/common/http";
 import {UsersContainerComponent} from "./containers/users-container-component/users-container.component";
 import {UserCardComponent} from "./components/user-card/user-card.component";
@@ -23,6 +22,9 @@ import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BookFormComponent} from "./components/book-form/book-form.component";
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     MatIconModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

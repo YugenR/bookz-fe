@@ -1,6 +1,6 @@
 <ng-template #loadingTemplate>
   <div class="flex flex-wrap justify-center gap-2">
-    <div class="skeleton h-80 w-96" *ngFor="let e of [].constructor(3)"></div>
+    <div class="skeleton h-80 w-50" *ngFor="let e of [].constructor(3)"></div>
   </div>
 </ng-template>
 
@@ -21,7 +21,7 @@
   <book-card (edit)="editBook(book.isbn)" (delete)="deleteBook(book.isbn)" [isInLibrary]="isInLibrary(book.isbn)" [readCount]="user.books[book.isbn]" [book]="book"
              *ngFor="let book of books" (read)="readThisBook(book.isbn)" (add)="addToLibrary(book.isbn)"></book-card>
 
-  <div class="card card-compact w-96 bg-purple-900 shadow-xl">
+  <div class="card card-compact card-bordered border-amber-500 w-50 bg-purple-900 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">A new wonderful journey</h2>
       <h3>Author: An unpredictable mind</h3>
@@ -34,20 +34,20 @@
       </div>
     </div>
   </div>
-  <div class="mt-3 items-center justify-center w-2/4">
 
-    <div *ngIf="success" class="toast-center toast-middle fading-element">
-      <div class="alert alert-success">
+</div>
+<div class="flex-row flex justify-center mt-3 mb-3 w-2/4">
+    <div *ngIf="true" class="toast-center justify-center fading-element">
+      <div class="alert bg-purple-700">
         <span>Operation successful.</span>
       </div>
     </div>
 
-    <div *ngIf="failure" class="toast-center toast-middle fading-element">
+    <div *ngIf="failure" class="toast-center fading-element">
       <div class="alert alert-error">
         <span>Something went wrong.</span>
       </div>
     </div>
-  </div>
 </div>
 
 
