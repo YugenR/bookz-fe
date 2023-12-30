@@ -1,0 +1,14 @@
+.card-compact p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2
+}
+
+.card-compact {
+  max-height: 400px;
+  min-height: 300px;
+  max-width: 400px;
+  overflow: hidden;
+}
