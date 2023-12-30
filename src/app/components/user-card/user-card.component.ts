@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserData} from "../../interfaces/user";
 
 @Component({
@@ -6,19 +6,23 @@ import {UserData} from "../../interfaces/user";
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.css']
 })
-export class UserCardComponent implements OnInit {
+export class UserCardComponent {
 
   @Input() user: UserData = {} as UserData
+  @Output() edit = new EventEmitter<void>()
+  @Output() delete = new EventEmitter<void>()
 
   constructor() {
-    console.log("user card")
   }
-
-  ngOnInit(): void {
-  }
-
 
   generatePath(userId: number) {
     return `/reserved/${userId}`;
+  }
+
+  editUser() {
+    this.edit.emit()
+  }
+  deleteUser() {
+    this.delete.emit()
   }
 }

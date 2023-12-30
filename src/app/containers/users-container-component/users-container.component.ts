@@ -14,12 +14,14 @@ import {UserFormComponent} from "../../components/user-form/user-form.component"
 })
 export class UsersContainerComponent implements OnInit {
 
+  success = false
+  failure = false
+
   loading = false
 
   users: UserData[] = []
 
   users$ = new Observable<UserData[]>()
-  showModal = false;
 
   constructor(private usersService: UsersService,
               private dialogService: DialogsService) {
@@ -61,9 +63,10 @@ export class UsersContainerComponent implements OnInit {
       .afterClosed()
       .pipe(switchMap(value => value ? this.users$ : EMPTY))
       .subscribe({
-        next: () => console.log()/*this.snackService.success('User created')*/,
-        error: (error) => console.log(error)/*this.snackService.error(error.message)*/,
-      })
+          next: () => this.popToast(),
+          error: () => this.popToast(true),
+        }
+      )
 
   }
 
@@ -74,19 +77,42 @@ export class UsersContainerComponent implements OnInit {
 
         this.dialogService.open(GeneralDialogComponent, {
           data: {
-            dialogTitle: 'Create user',
-            componentData: {entity: user},
+            dialogTitle: 'Edit user',
+            componentData: {user: user},
             component: UserFormComponent
           }
         })
           .afterClosed()
           .pipe(switchMap(value => value ? this.users$ : EMPTY))
           .subscribe({
-            next: () => console.log()/*this.snackService.success('User created')*/,
-            error: (error) => console.log(error)/*this.snackService.error(error.message)*/,
-          })
+              next: () => this.popToast(),
+              error: () => this.popToast(true),
+            }
+          )
       })
+  }
 
+  deleteUser(userId: number) {
+    this.dialogService.confirm("Are you sure you want to delete this user?", "Be careful!")
+      .pipe(
+        switchMap((value) => value ?
+          this.usersService.deleteUser(userId) : EMPTY),
+        switchMap(() => this.users$)
+      )
+      .subscribe({
+          next: () => this.popToast(),
+          error: () => this.popToast(true),
+        }
+      )
+  }
 
+  private popToast(isError = false) {
+    if (isError) {
+      this.failure = true
+      setTimeout(() => this.failure = false, 3000)
+    } else {
+      this.success = true
+      setTimeout(() => this.success = false, 3000)
+    }
   }
 }

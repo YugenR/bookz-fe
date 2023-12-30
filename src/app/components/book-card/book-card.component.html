@@ -1,8 +1,9 @@
-<div class="card card-compact w-96 bg-base-100 shadow-xl">
+<div class="card card-compact card-bordered border-purple-900 w-50 bg-base-100 shadow-xl">
   <div class="card-body">
     <h2 class="card-title">{{book.title}}</h2>
-    <h3 class="italic">Author: {{book.author}}</h3>
-    <p>Plot: {{book?.plot}}</p>
+    <h3>Author: {{book.author}}</h3>
+    <h3>ISBN: {{book.isbn}}</h3>
+    <p class="italic">Plot: {{book?.plot}}</p>
     <p *ngIf="showReadCount">Read count: {{readCount}}</p>
     <div class="card-actions justify-end">
 
@@ -10,8 +11,14 @@
         {{readCount == 0 ? "Read" : "Read again"}}
       </button>
 
-      <button *ngIf="!isInLibrary" class="btn btn-accent" (click)="addToLibrary()">
+      <button *ngIf="!isInLibrary" class="btn bg-purple-900" (click)="addToLibrary()">
         Add to library
+      </button>
+      <button class="btn btn-accent" (click)="editBook()">
+        Edit
+      </button>
+      <button class="btn bg-red-500" (click)="deleteBook()">
+        Delete
       </button>
     </div>
   </div>

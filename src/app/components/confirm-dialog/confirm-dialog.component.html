@@ -1,6 +1,6 @@
-<div class="text-center h-screen flex flex-col items-center justify-center">
+<div class="text-center h-1/2 flex flex-col items-center justify-center gap-4">
 
-  <h2 class="text-4xl">
+  <h2 class="text-2xl">
     {{ data.title }}
   </h2>
 
@@ -8,7 +8,7 @@
     {{ data.message }}
   </p>
 
-  <div class="flex items-stretch flex-wrap justify-around">
+  <div class="flex items-stretch flex-wrap justify-around gap-4">
     <button [matDialogClose]="false" class="mt-2.5 bg-red-500 text-white px-4 py-2 rounded" mat-button>
       {{ data.cancelTextKey ? data.cancelTextKey : 'Cancel' }}
     </button>

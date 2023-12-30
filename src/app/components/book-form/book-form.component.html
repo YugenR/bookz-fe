@@ -1,0 +1,82 @@
+<div [formGroup]="bookForm" class="flex flex-col w-full">
+
+  <mat-form-field>
+
+    <mat-label>Title</mat-label>
+    <input
+      formControlName="title"
+      id="title"
+      matInput
+      type="text">
+    <mat-error *ngIf="bookForm.controls['title'].errors?.['required']">
+      Title is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-label>Author</mat-label>
+    <input
+      formControlName="author"
+      id="author"
+      matInput
+      type="text">
+    <mat-error *ngIf="bookForm.controls['author'].errors?.['required']">
+      Author is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-label>Plot</mat-label>
+    <textarea
+      cdkAutosizeMinRows="5"
+      cdkTextareaAutosize
+      formControlName="plot"
+      id="plot"
+      matInput>
+            </textarea>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="!this._book.isbn">
+    <mat-label>ISBN</mat-label>
+    <input
+      (keyup)="checkIsbnAvailability($event)"
+      formControlName="isbn"
+      id="isbn"
+      matInput
+      type="text">
+    <mat-spinner
+      [diameter]="30"
+      *ngIf="checkingIsbn && bookForm.value.isbn"
+      matSuffix>
+    </mat-spinner>
+    <mat-icon *ngIf="!checkingIsbn && IsbnAlreadyInUse"
+              color="warn"
+              matSuffix
+    >
+      warning
+    </mat-icon>
+    <mat-icon color="primary" *ngIf="!checkingIsbn && !IsbnAlreadyInUse && bookForm.controls['isbn'].dirty"
+              matSuffix>done
+    </mat-icon>
+    <mat-error *ngIf="bookForm.controls['isbn'].errors?.['required']"
+    >
+      ISBN is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <p class="mat-error mb-2" *ngIf="!checkingIsbn && IsbnAlreadyInUse">A book with this ISBN already exists in
+    global library: "{{alreadyUsedBookTitle}}"</p>
+
+
+  <button
+    (click)="_book.isbn ? updateBook(_book.isbn) : createBook()"
+    [disabled]="bookForm.invalid || saving || !bookForm.dirty || IsbnAlreadyInUse || checkingIsbn"
+    color="primary"
+    mat-raised-button
+  >
+    <mat-icon>check</mat-icon>
+    &nbsp;<span class="hidden md:inline">Save</span>
+  </button>
+</div>

@@ -4,5 +4,9 @@ export class Constants {
     books: "books",
     users: "users"
   }
+  static pagination = {
+    defaultPage: 0,
+    defaultPageSize: 10
+  }
 
 }

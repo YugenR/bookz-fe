@@ -4,3 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.fading-element {
+  -webkit-animation: fadeinout 2500ms linear forwards;
+  animation: fadeinout 2500ms linear forwards;
+  opacity: 0;
+}
+
+@-webkit-keyframes fadeinout {
+  50% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+  50% { opacity: 1; }
+}

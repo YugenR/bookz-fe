@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
 import {UsersContainerComponent} from "./containers/users-container-component/users-container.component";
 import {PublicContainerComponent} from "./containers/public-container/public-container.component";
 import {PrivateContainerComponent} from "./containers/private-container/private-container.component";
+import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
 
 const routes: Routes = [
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
         component: UsersContainerComponent
       },
       {
-        path: 'reserved',
+        path: 'reserved/:userId',
         component: PrivateContainerComponent,
         children: [
           {
@@ -28,7 +28,7 @@ const routes: Routes = [
             component: BooksContainerComponent,
           },
           {
-            path: ":userId",
+            path: "",
             component: BooksContainerComponent,
           }
         ]
