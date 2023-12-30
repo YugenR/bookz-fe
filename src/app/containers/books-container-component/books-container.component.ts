@@ -194,7 +194,8 @@ export class BooksContainerComponent implements OnInit {
       )
       .subscribe({
         next: () => this.popToast(),
-        error: () => this.popToast(true),        }
+        error: () => this.popToast(true)
+        }
       )
   }
 
