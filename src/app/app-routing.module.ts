@@ -4,6 +4,8 @@ import {UsersContainerComponent} from "./containers/users-container-component/us
 import {PublicContainerComponent} from "./containers/public-container/public-container.component";
 import {PrivateContainerComponent} from "./containers/private-container/private-container.component";
 import {BooksContainerComponent} from "./containers/books-container-component/books-container.component";
+import {BookCardComponent} from "./components/book-card/book-card.component";
+import {BookDetailComponent} from "./components/book-detail/book-detail.component";
 
 const routes: Routes = [
   {
@@ -20,16 +22,16 @@ const routes: Routes = [
         component: UsersContainerComponent
       },
       {
-        path: 'reserved/:userId',
+        path: 'reserved',
         component: PrivateContainerComponent,
         children: [
           {
-            path: "books",
+            path: ":userId",
             component: BooksContainerComponent,
           },
           {
-            path: "",
-            component: BooksContainerComponent,
+            path: "books/:isbn",
+            component: BookDetailComponent,
           }
         ]
       },

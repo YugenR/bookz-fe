@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BookData} from "../../interfaces/book";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'book-card',
@@ -20,7 +21,7 @@ export class BookCardComponent implements OnInit {
   @Output() delete = new EventEmitter<void>()
 
 
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -45,5 +46,10 @@ export class BookCardComponent implements OnInit {
   }
   removeBook() {
     this.remove.emit()
+  }
+
+  bookDetail(isbn: string) {
+    // this.router.navigate(["books", isbn]).then();
+    this.router.navigate(["books/ISBN-HP"]).then();
   }
 }

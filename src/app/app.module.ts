@@ -26,12 +26,14 @@ import {BooksContainerComponent} from "./containers/books-container-component/bo
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NgOptimizedImage} from "@angular/common";
+import {BookDetailComponent} from "./components/book-detail/book-detail.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     BookCardComponent,
     BookFormComponent,
+    BookDetailComponent,
     UserCardComponent,
     UserFormComponent,
     ConfirmDialogComponent,
