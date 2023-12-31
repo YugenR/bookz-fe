@@ -1,0 +1,72 @@
+<div [formGroup]="userForm" class="flex flex-col">
+
+  <mat-form-field>
+
+    <mat-label>Name</mat-label>
+    <input
+      formControlName="name"
+      id="name"
+      matInput
+      type="text">
+    <mat-error *ngIf="userForm.controls['name'].errors?.['required']">
+      Name is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-label>Surname</mat-label>
+    <input
+      formControlName="surname"
+      id="surname"
+      matInput
+      type="text">
+    <mat-error *ngIf="userForm.controls['surname'].errors?.['required']">
+      Surname is mandatory
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="!this._user.id">
+    <mat-label>Email</mat-label>
+    <input
+      (keyup)="checkEmailAvailability($event)"
+      formControlName="email"
+      id="email"
+      matInput
+      type="text">
+    <mat-spinner
+      [diameter]="30"
+      *ngIf="checkingEmail && userForm.value.email"
+      matSuffix>
+    </mat-spinner>
+    <mat-icon *ngIf="!checkingEmail && emailAlreadyInUse"
+              color="warn"
+              matSuffix
+    >
+      warning
+    </mat-icon>
+    <mat-icon color="primary" *ngIf="!checkingEmail && !emailAlreadyInUse && userForm.controls['email'].dirty"
+              matSuffix>done
+    </mat-icon>
+    <mat-error *ngIf="userForm.controls['email'].errors?.['required']"
+    >
+      Email is mandatory
+    </mat-error>
+    <mat-error *ngIf="userForm.controls['email'].errors?.['pattern']"
+    >
+      Must be a valid email
+    </mat-error>
+  </mat-form-field>
+  <p class="mat-error mb-2" *ngIf="!checkingEmail && emailAlreadyInUse">A user with this email already exists</p>
+
+  <button
+    (click)="_user.id ? updateUser(_user.id) : createUser()"
+    [disabled]="userForm.invalid || saving || !userForm.dirty || emailAlreadyInUse || checkingEmail"
+    color="primary"
+    class="bg-blue-500 text-white px-4 py-2 rounded"
+    mat-raised-button
+  >
+    <mat-icon>check</mat-icon>
+    &nbsp;<span class="hidden md:inline">Save</span>
+  </button>
+</div>

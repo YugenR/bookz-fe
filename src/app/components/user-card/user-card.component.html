@@ -1,0 +1,18 @@
+<div class="card card-compact w-50 card-bordered border-purple-900 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">{{user.name}} {{user.surname}}</h2>
+    <p>Total books: {{user.bookCount}}</p>
+    <p>Total read: {{user.totalReadCount}}</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary" [routerLink]="generatePath(user.id)">
+        It's me
+      </button>
+      <button class="btn btn-accent" (click)="editUser()">
+        Edit
+      </button>
+      <button class="btn bg-red-500" (click)="deleteUser()">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
