@@ -9,10 +9,11 @@
   <div class="mb-3 flex justify-center flex-wrap gap-3">
     <search-box (load)="loadKeyword($event)"></search-box>
     <!--  Sort field-->
-    <div class="join" id="by">
-      <input *ngFor="let field of ['title', 'author', 'isbn']" (click)="changeSortField(field)"
+    <div class="flex items-center ml-3">
+      <p class="text-xs mr-3">Sort by</p>
+      <input *ngFor="let field of ['title', 'author', 'ISBN']" (click)="changeSortField(field.toLowerCase())"
              class="join-item btn btn-square" type="radio"
-             name="by" [value]="field"
+             name="by" [value]="field.toLowerCase()"
              [attr.aria-label]="capitalizeFirstLetter(field)" [checked]="field == 'title'"/>
     </div>
     <!--  Sort direction-->
@@ -23,20 +24,24 @@
              [attr.aria-label]="dir" [checked]="dir == 'ASC'"/>
     </div>
     <!--  Page size-->
-    <div class="join items-center" id="page-size">
-      <input *ngFor="let pageSize of [2, 5, 10]" (click)="changePageSize(pageSize)"
-             class="join-item btn btn-xs btn-square" type="radio"
-             name="page-size" [value]="pageSize"
-             [attr.aria-label]="pageSize" [checked]="pageSize == 2"/>
-    </div>
 
-    <!--  Page number-->
-    <div class="join items-center" id="pageNumber">
-      <input *ngFor="let pageNumber of [].constructor(numberOfPages); let i = index"
-             (click)="changePageNumber(i)"
-             class="join-item btn btn-xs btn-square" type="radio"
-             name="page-number" [value]="i + 1"
-             [attr.aria-label]="i + 1" [checked]="i -1"/>
+    <div class="flex items-center gap-3 ml-3">
+      <p class="text-xs">Pagination</p>
+      <div class="join items-center" id="page-size">
+        <input *ngFor="let pageSize of [2, 5, 10]" (click)="changePageSize(pageSize)"
+               class="join-item btn btn-xs btn-square" type="radio"
+               name="page-size" [value]="pageSize"
+               [attr.aria-label]="pageSize" [checked]="pageSize == 2"/>
+      </div>
+
+      <!--  Page number-->
+      <div class="join items-center" id="pageNumber">
+        <input *ngFor="let pageNumber of [].constructor(numberOfPages); let i = index"
+               (click)="changePageNumber(i)"
+               class="join-item btn btn-xs btn-square" type="radio"
+               name="page-number" [value]="i + 1"
+               [attr.aria-label]="i + 1" [checked]="i -1"/>
+      </div>
     </div>
 
     <!--  Library toggle-->

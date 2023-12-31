@@ -58,8 +58,6 @@ export class BookDetailComponent implements OnInit {
   }
 
   getMyReadCount() {
-    console.log(this.user.books)
-    console.log(this.user.books[this.book.isbn])
-    return this.user.books[this.book.isbn]
+    return this.user.books[this.book.isbn] ?? 0
   }
 }
